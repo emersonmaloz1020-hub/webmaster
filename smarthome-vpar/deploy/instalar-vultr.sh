@@ -26,7 +26,7 @@ SRC_DIR="/opt/smarthome-vpar"
 APP_DIR="$SRC_DIR/smarthome-vpar"
 DATA_DIR="/var/lib/smarthome-vpar"
 BACKUP_DIR="/var/backups/smarthome-vpar"
-PORT=3000
+PORT=""
 
 paso() { printf '\n\033[1;36m==> %s\033[0m\n' "$1"; }
 error() { printf '\n\033[1;31mERROR: %s\033[0m\n' "$1" >&2; exit 1; }
@@ -44,7 +44,9 @@ fi
 PUBLIC_IP="$(curl -fsS4 --max-time 10 https://api.ipify.org || hostname -I | awk '{print $1}')"
 
 paso "Instalando paquetes del sistema"
-export DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=a
+# Quita el repositorio externo de Caddy (Cloudsmith) si quedó de un intento anterior: hoy responde 402.
+rm -f /etc/apt/sources.list.d/caddy-stable.list /usr/share/keyrings/caddy-stable-archive-keyring.gpg
 apt-get update -y
 apt-get install -y curl git ca-certificates gnupg ufw debian-keyring debian-archive-keyring apt-transport-https sqlite3
 
@@ -57,11 +59,35 @@ node -v
 
 if ! command -v caddy >/dev/null; then
   paso "Instalando Caddy (HTTPS automático)"
-  curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor --yes -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
-  curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' > /etc/apt/sources.list.d/caddy-stable.list
-  apt-get update -y
-  apt-get install -y caddy
+  if ! apt-get install -y caddy; then
+    # Respaldo: versión oficial publicada en GitHub.
+    ARCH="$(dpkg --print-architecture)"
+    curl -fsSL "https://github.com/caddyserver/caddy/releases/download/v2.10.2/caddy_2.10.2_linux_${ARCH}.tar.gz" | tar -xz -C /usr/bin caddy
+    chmod +x /usr/bin/caddy
+    id caddy >/dev/null 2>&1 || useradd --system --home /var/lib/caddy --create-home --shell /usr/sbin/nologin caddy
+    mkdir -p /etc/caddy
+    cat > /etc/systemd/system/caddy.service <<'UNIT'
+[Unit]
+Description=Caddy
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=caddy
+Group=caddy
+ExecStart=/usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
+ExecReload=/usr/bin/caddy reload --config /etc/caddy/Caddyfile --force
+TimeoutStopSec=5s
+LimitNOFILE=1048576
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target
+UNIT
+    systemctl daemon-reload
+  fi
 fi
+caddy version
 
 paso "Descargando la tienda"
 id "$APP_USER" >/dev/null 2>&1 || useradd --system --home "$SRC_DIR" --shell /usr/sbin/nologin "$APP_USER"
@@ -79,6 +105,16 @@ mkdir -p "$DATA_DIR" "$BACKUP_DIR"
 chown -R "$APP_USER:$APP_USER" "$SRC_DIR" "$DATA_DIR"
 
 paso "Configurando la tienda"
+# Puerto interno: se conserva el de una instalación anterior o se busca uno libre
+# (este servidor puede tener otras aplicaciones, por ejemplo con pm2).
+if [ -f "$APP_DIR/.env" ]; then
+  PORT="$(grep -E '^PORT=' "$APP_DIR/.env" | cut -d= -f2 || true)"
+fi
+if [ -z "$PORT" ]; then
+  PORT=3080
+  while ss -ltn | awk '{print $4}' | grep -Eq "[:.]$PORT\$"; do PORT=$((PORT + 1)); done
+fi
+echo "Puerto interno de la tienda: $PORT"
 if [ -n "$DOMAIN" ]; then
   SITE_URL="https://$DOMAIN"
   COOKIE_SECURE=1
