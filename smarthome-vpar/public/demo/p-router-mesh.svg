@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+
+<defs>
+  <radialGradient id="bgp12" cx="50%" cy="42%" r="75%">
+    <stop offset="0" stop-color="#12233d"/><stop offset=".55" stop-color="#0a1322"/><stop offset="1" stop-color="#04070d"/>
+  </radialGradient>
+  <radialGradient id="glowp12" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="bodyp12" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f4f7fb"/><stop offset="1" stop-color="#b9c3d1"/>
+  </linearGradient>
+  <linearGradient id="darkp12" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2a3446"/><stop offset="1" stop-color="#0d121b"/>
+  </linearGradient>
+  <linearGradient id="accp12" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e7bff"/><stop offset="1" stop-color="#22d3ee"/>
+  </linearGradient>
+  <pattern id="gridp12" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1e7bff" stroke-opacity=".08" stroke-width="1"/>
+  </pattern>
+  <filter id="softp12" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<defs>
+  <radialGradient id="bgp12a" cx="50%" cy="42%" r="75%">
+    <stop offset="0" stop-color="#12233d"/><stop offset=".55" stop-color="#0a1322"/><stop offset="1" stop-color="#04070d"/>
+  </radialGradient>
+  <radialGradient id="glowp12a" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="bodyp12a" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f4f7fb"/><stop offset="1" stop-color="#b9c3d1"/>
+  </linearGradient>
+  <linearGradient id="darkp12a" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2a3446"/><stop offset="1" stop-color="#0d121b"/>
+  </linearGradient>
+  <linearGradient id="accp12a" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e7bff"/><stop offset="1" stop-color="#22d3ee"/>
+  </linearGradient>
+  <pattern id="gridp12a" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1e7bff" stroke-opacity=".08" stroke-width="1"/>
+  </pattern>
+  <filter id="softp12a" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<defs>
+  <radialGradient id="bgp12b" cx="50%" cy="42%" r="75%">
+    <stop offset="0" stop-color="#12233d"/><stop offset=".55" stop-color="#0a1322"/><stop offset="1" stop-color="#04070d"/>
+  </radialGradient>
+  <radialGradient id="glowp12b" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="bodyp12b" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f4f7fb"/><stop offset="1" stop-color="#b9c3d1"/>
+  </linearGradient>
+  <linearGradient id="darkp12b" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2a3446"/><stop offset="1" stop-color="#0d121b"/>
+  </linearGradient>
+  <linearGradient id="accp12b" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e7bff"/><stop offset="1" stop-color="#22d3ee"/>
+  </linearGradient>
+  <pattern id="gridp12b" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1e7bff" stroke-opacity=".08" stroke-width="1"/>
+  </pattern>
+  <filter id="softp12b" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<defs>
+  <radialGradient id="bgp12c" cx="50%" cy="42%" r="75%">
+    <stop offset="0" stop-color="#12233d"/><stop offset=".55" stop-color="#0a1322"/><stop offset="1" stop-color="#04070d"/>
+  </radialGradient>
+  <radialGradient id="glowp12c" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="bodyp12c" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f4f7fb"/><stop offset="1" stop-color="#b9c3d1"/>
+  </linearGradient>
+  <linearGradient id="darkp12c" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2a3446"/><stop offset="1" stop-color="#0d121b"/>
+  </linearGradient>
+  <linearGradient id="accp12c" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e7bff"/><stop offset="1" stop-color="#22d3ee"/>
+  </linearGradient>
+  <pattern id="gridp12c" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1e7bff" stroke-opacity=".08" stroke-width="1"/>
+  </pattern>
+  <filter id="softp12c" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<rect width="800" height="800" fill="url(#bgp12)"/>
+<rect width="800" height="800" fill="url(#gridp12)"/>
+<circle cx="400" cy="390" r="304" fill="url(#glowp12)"/>
+<g transform="translate(400 410) scale(1.2)">
+    <ellipse cx="0" cy="150" rx="150" ry="16" fill="#000" opacity=".45"/>
+    <rect x="-75" y="-140" width="150" height="280" rx="60" fill="url(#bodyp12)"/>
+    <rect x="-55" y="-120" width="110" height="18" rx="9" fill="#d5dde7"/>
+    <circle cx="0" cy="110" r="6" fill="#22d3ee"/>
+    <path d="M-150 -40 a160 160 0 0 1 0 140 M150 -40 a160 160 0 0 0 0 140" stroke="#1e7bff" stroke-width="7" fill="none" stroke-linecap="round" opacity=".75"/>
+    <path d="M-120 -15 a110 110 0 0 1 0 90 M120 -15 a110 110 0 0 0 0 90" stroke="#22d3ee" stroke-width="7" fill="none" stroke-linecap="round" opacity=".9"/></g>
+<text x="782" y="782" text-anchor="end" font-family="Arial, sans-serif" font-size="15" letter-spacing="2" fill="#8fb3d9" opacity=".75">IMAGEN DE EJEMPLO</text>
+</svg>

@@ -1,0 +1,22 @@
+<%- include('_head') %>
+<div class="page-title"><h1>Respaldo y datos</h1></div>
+<section class="panel">
+  <h2>Descargar copias de seguridad</h2>
+  <p class="muted">Descarga copias periódicas y guárdalas en un lugar seguro (por ejemplo, Google Drive).</p>
+  <div class="actions">
+    <a class="btn btn-primary" href="/admin/respaldo/base-datos">Base de datos completa (.db)</a>
+    <a class="btn btn-ghost" href="/admin/respaldo/exportar.json">Exportar todo en JSON</a>
+    <a class="btn btn-ghost" href="/admin/respaldo/productos.csv">Lista de productos (Excel / CSV)</a>
+  </div>
+  <p class="hint">Las fotografías se guardan en el servidor, en <code><%= dataDir %>/uploads</code>. Para una copia completa con fotografías, usa el comando <code>npm run backup</code> en el servidor o la copia de seguridad del disco de tu proveedor de hosting (ver documentación).</p>
+</section>
+<section class="panel">
+  <h2>Datos de demostración</h2>
+  <% if (demoCount > 0) { %>
+    <p>Hay <strong><%= demoCount %></strong> productos de demostración (marcados como “Ejemplo”) y sus promociones de ejemplo. Las categorías no se eliminan.</p>
+    <form method="post" action="/admin/respaldo/eliminar-demo" data-confirm="¿Eliminar todos los productos y promociones de demostración? Tus productos reales no se modifican.">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-danger" type="submit">Eliminar datos de demostración</button>
+    </form>
+  <% } else { %><p class="muted">No quedan productos de demostración.</p><% } %>
+</section>
+<%- include('_foot') %>

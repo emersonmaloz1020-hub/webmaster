@@ -1,0 +1,140 @@
+<%- include('_head') %>
+<%
+  const selected = new Set((p.categories || []).map((c) => Number(c.id)));
+  const v = (x) => (x === null || x === undefined ? '' : x);
+%>
+<div class="page-title">
+  <h1><%= p.id ? 'Editar producto' : 'Nuevo producto' %></h1>
+  <div class="actions">
+    <% if (p.id) { %><a class="btn btn-ghost" href="/producto/<%= p.slug %>" target="_blank" rel="noopener">Ver en la tienda ↗</a><% } %>
+    <a class="btn btn-ghost" href="/admin/productos">← Volver</a>
+  </div>
+</div>
+<% if (p.is_demo) { %><div class="flash flash-info">Este es un <strong>producto de demostración</strong>. Puedes editarlo para convertirlo en uno real o eliminarlo.</div><% } %>
+
+<form method="post" action="<%= p.id ? '/admin/productos/' + p.id : '/admin/productos' %>" enctype="multipart/form-data" class="form form-grid" data-dirty-check>
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="col-main">
+    <section class="panel">
+      <h2>Información principal</h2>
+      <label>Nombre del producto *<input name="name" value="<%= p.name %>" required maxlength="150" data-slug-source></label>
+      <div class="row-2">
+        <label>Marca<input name="brand" value="<%= p.brand %>" maxlength="80"></label>
+        <label>Modelo<input name="model" value="<%= p.model %>" maxlength="80"></label>
+      </div>
+      <label>Descripción corta<input name="short_description" value="<%= p.short_description %>" maxlength="300"><span class="hint">Aparece debajo del nombre y en los resultados de Google.</span></label>
+      <label>Descripción comercial<textarea name="description" rows="7" maxlength="8000"><%= p.description %></textarea><span class="hint">Deja una línea en blanco para separar párrafos.</span></label>
+    </section>
+
+    <section class="panel" id="imagenes">
+      <h2>Fotografías</h2>
+      <% if (p.images && p.images.length) { %>
+        <p class="hint">La primera imagen es la principal. Usa los botones para reordenar.</p>
+        <div class="image-list">
+          <% p.images.forEach((img, i) => { %>
+            <div class="image-item">
+              <img src="<%= img.path %>" alt="" width="140" height="140">
+              <% if (i === 0) { %><span class="tag tag-main">Principal</span><% } %>
+              <label class="small">Texto alternativo (ALT)<input name="alt_<%= img.id %>" value="<%= img.alt %>" maxlength="200" placeholder="Describe la imagen"></label>
+              <div class="image-actions">
+                <% if (i > 0) { %><button class="btn btn-ghost btn-xs" form="img-<%= img.id %>-main" type="submit">Hacer principal</button><% } %>
+                <% if (i > 0) { %><button class="btn btn-ghost btn-xs" form="img-<%= img.id %>-up" type="submit" aria-label="Mover antes">←</button><% } %>
+                <% if (i < p.images.length - 1) { %><button class="btn btn-ghost btn-xs" form="img-<%= img.id %>-down" type="submit" aria-label="Mover después">→</button><% } %>
+                <button class="btn btn-danger btn-xs" form="img-<%= img.id %>-eliminar" type="submit">Eliminar</button>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+      <label class="dropzone">
+        <%- icon('camera', 28) %>
+        <strong><%= p.images && p.images.length ? 'Agregar más fotografías' : 'Subir fotografías' %></strong>
+        <span class="hint">Desde tu computador o celular (cámara o galería). JPG, PNG o WEBP. Se optimizan automáticamente.</span>
+        <input type="file" name="images" accept="image/*" multiple data-image-input data-preview="#new-previews">
+      </label>
+      <div class="previews" id="new-previews"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Características técnicas</h2>
+      <label>Especificaciones<textarea name="specs" rows="6" maxlength="5000" placeholder="Resolución: 2K&#10;Visión nocturna: Sí, hasta 10 m&#10;Almacenamiento: microSD hasta 256 GB"><%= p.specs %></textarea><span class="hint">Una característica por línea con el formato <code>Nombre: valor</code>.</span></label>
+      <div class="row-2">
+        <label>Conectividad<input name="connectivity" value="<%= p.connectivity %>" maxlength="300" placeholder="Wi-Fi 2.4 GHz, Bluetooth"><span class="hint">Separa con comas. Se usa en los filtros.</span></label>
+        <label>Compatibilidad confirmada<input name="compatibility" value="<%= p.compatibility %>" maxlength="300" placeholder="Alexa, Google Assistant"><span class="hint">Solo compatibilidades verificadas.</span></label>
+      </div>
+      <label>Contenido de la caja<textarea name="box_contents" rows="3" maxlength="2000" placeholder="Un elemento por línea"><%= p.box_contents %></textarea></label>
+      <label>Palabras clave para el buscador<input name="keywords" value="<%= p.keywords %>" maxlength="300" placeholder="camara ip, vigilancia, bebe"></label>
+    </section>
+
+    <details class="panel">
+      <summary><h2>SEO (opcional)</h2></summary>
+      <label>Dirección web (URL)<div class="prefix-input"><span>/producto/</span><input name="slug" value="<%= p.slug %>" maxlength="80" placeholder="se genera desde el nombre" data-slug-target></div></label>
+      <label>Título para buscadores<input name="seo_title" value="<%= p.seo_title %>" maxlength="120" placeholder="Por defecto: nombre del producto"></label>
+      <label>Descripción para buscadores<textarea name="seo_description" rows="2" maxlength="300" placeholder="Por defecto: descripción corta"><%= p.seo_description %></textarea></label>
+    </details>
+  </div>
+
+  <div class="col-side">
+    <section class="panel">
+      <h2>Precio (COP)</h2>
+      <label>Precio de venta *<input name="price" value="<%= v(p.price) %>" required inputmode="numeric" placeholder="Ej.: 159900" data-money></label>
+      <label>Precio promocional<input name="promo_price" value="<%= v(p.promo_price) %>" inputmode="numeric" placeholder="Opcional" data-money><span class="hint">Si se llena, el precio de venta aparece tachado.</span></label>
+      <div class="row-2">
+        <label>Promoción desde<input type="date" name="promo_starts" value="<%= v(p.promo_starts) %>"></label>
+        <label>Hasta<input type="date" name="promo_ends" value="<%= v(p.promo_ends) %>"></label>
+      </div>
+      <span class="hint">Vacías = la promoción no vence.</span>
+    </section>
+
+    <section class="panel">
+      <h2>Inventario</h2>
+      <label>Disponibilidad
+        <select name="availability">
+          <% Object.entries(availability).forEach(([k, a]) => { %><option value="<%= k %>" <%= p.availability === k ? 'selected' : '' %>><%= a.label %></option><% }) %>
+        </select>
+      </label>
+      <label>Existencias<input type="number" name="stock" min="0" step="1" value="<%= v(p.stock) %>" placeholder="Vacío = no controlar"><span class="hint">Con 0 unidades se muestra “Agotado” (salvo “Bajo pedido”).</span></label>
+    </section>
+
+    <section class="panel">
+      <h2>Visibilidad y etiquetas</h2>
+      <label class="check"><input type="checkbox" name="active" value="1" <%= p.active ? 'checked' : '' %>> Visible en la tienda</label>
+      <label class="check"><input type="checkbox" name="featured" value="1" <%= p.featured ? 'checked' : '' %>> Destacado en la página de inicio</label>
+      <label class="check"><input type="checkbox" name="is_new" value="1" <%= p.is_new ? 'checked' : '' %>> Etiqueta “Nuevo”</label>
+      <label class="check"><input type="checkbox" name="is_offer" value="1" <%= p.is_offer ? 'checked' : '' %>> Etiqueta “Oferta”</label>
+      <label>Orden<input type="number" name="sort_order" value="<%= v(p.sort_order) %>" step="1"><span class="hint">Número menor = aparece primero.</span></label>
+    </section>
+
+    <section class="panel">
+      <h2>Categorías</h2>
+      <% if (!categories.length) { %><p class="muted">Aún no hay categorías. <a href="/admin/categorias/nueva">Crear una</a>.</p><% } %>
+      <div class="cat-checks">
+        <% categories.forEach((c) => { %>
+          <label class="check"><input type="checkbox" name="category_ids" value="<%= c.id %>" <%= selected.has(c.id) ? 'checked' : '' %>> <%= c.name %><% if (!c.active) { %> <span class="muted small">(oculta)</span><% } %></label>
+          <% c.children.forEach((sc) => { %>
+            <label class="check sub"><input type="checkbox" name="category_ids" value="<%= sc.id %>" <%= selected.has(sc.id) ? 'checked' : '' %>> <%= sc.name %></label>
+          <% }) %>
+        <% }) %>
+      </div>
+      <span class="hint">Puedes marcar varias. La primera marcada es la principal.</span>
+    </section>
+
+    <div class="sticky-save">
+      <button class="btn btn-primary btn-block" type="submit"><%= p.id ? 'Guardar cambios' : 'Crear producto' %></button>
+    </div>
+  </div>
+</form>
+
+<% if (p.id) { %>
+  <% (p.images || []).forEach((img) => { ['main', 'up', 'down', 'eliminar'].forEach((a) => { %>
+    <form id="img-<%= img.id %>-<%= a %>" method="post" action="/admin/imagenes/<%= img.id %>/<%= a %>" hidden <%- a === 'eliminar' ? 'data-confirm="¿Eliminar esta fotografía?"' : '' %>><input type="hidden" name="_csrf" value="<%= csrfToken %>"></form>
+  <% }) }) %>
+  <section class="panel danger-zone">
+    <h2>Otras acciones</h2>
+    <div class="actions">
+      <form method="post" action="/admin/productos/<%= p.id %>/duplicar"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-ghost" type="submit">Duplicar producto</button></form>
+      <form method="post" action="/admin/productos/<%= p.id %>/eliminar" data-confirm="¿Eliminar definitivamente “<%= p.name %>” y sus fotografías? Esta acción no se puede deshacer."><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-danger" type="submit">Eliminar producto</button></form>
+    </div>
+  </section>
+<% } %>
+<%- include('_foot') %>

@@ -1,0 +1,15 @@
+<%- include('_head') %>
+<div class="auth-card">
+  <img src="<%= s.logo || '/logo.svg' %>" alt="" width="56" height="56">
+  <h1>Panel de <%= s.store_name %></h1>
+  <p class="muted">Ingresa con tu usuario de administrador.</p>
+  <% if (error) { %><div class="flash flash-error" role="alert"><%= error %></div><% } %>
+  <form method="post" action="/admin/login" class="form">
+    <input type="hidden" name="next" value="<%= next %>">
+    <label>Usuario<input name="username" autocomplete="username" required autofocus autocapitalize="none"></label>
+    <label>Contraseña<input type="password" name="password" autocomplete="current-password" required></label>
+    <button class="btn btn-primary btn-block" type="submit">Iniciar sesión</button>
+  </form>
+  <a class="muted small" href="/">← Volver a la tienda</a>
+</div>
+<%- include('_foot') %>

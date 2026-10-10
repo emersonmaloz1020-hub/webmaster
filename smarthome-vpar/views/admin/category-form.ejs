@@ -1,0 +1,58 @@
+<%- include('_head') %>
+<div class="page-title">
+  <h1><%= c.id ? 'Editar categoría' : 'Nueva categoría' %></h1>
+  <div class="actions">
+    <% if (c.id) { %><a class="btn btn-ghost" href="/categoria/<%= c.slug %>" target="_blank" rel="noopener">Ver en la tienda ↗</a><a class="btn btn-ghost" href="/admin/productos/nuevo?categoria=<%= c.id %>">+ Producto en esta categoría</a><% } %>
+    <a class="btn btn-ghost" href="/admin/categorias">← Volver</a>
+  </div>
+</div>
+<form method="post" action="<%= c.id ? '/admin/categorias/' + c.id : '/admin/categorias' %>" enctype="multipart/form-data" class="form form-grid" data-dirty-check>
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="col-main">
+    <section class="panel">
+      <h2>Datos de la categoría</h2>
+      <label>Nombre *<input name="name" value="<%= c.name %>" required maxlength="100"></label>
+      <label>Descripción corta<textarea name="description" rows="3" maxlength="500"><%= c.description %></textarea></label>
+      <label>Categoría superior
+        <select name="parent_id">
+          <option value="">— Ninguna (categoría principal) —</option>
+          <% parents.forEach((pc) => { %><option value="<%= pc.id %>" <%= Number(c.parent_id) === pc.id ? 'selected' : '' %>><%= pc.name %></option><% }) %>
+        </select>
+        <span class="hint">Elige una para convertir esta categoría en subcategoría.</span>
+      </label>
+      <fieldset class="icon-picker">
+        <legend>Ícono</legend>
+        <% iconChoices.forEach((ic) => { %>
+          <label title="<%= ic %>"><input type="radio" name="icon" value="<%= ic %>" <%= c.icon === ic ? 'checked' : '' %>><span><%- icon(ic, 22) %></span></label>
+        <% }) %>
+      </fieldset>
+    </section>
+    <details class="panel">
+      <summary><h2>SEO (opcional)</h2></summary>
+      <label>Dirección web (URL)<div class="prefix-input"><span>/categoria/</span><input name="slug" value="<%= c.slug %>" maxlength="80" placeholder="se genera desde el nombre"></div></label>
+      <label>Título para buscadores<input name="seo_title" value="<%= c.seo_title %>" maxlength="120"></label>
+      <label>Descripción para buscadores<textarea name="seo_description" rows="2" maxlength="300"><%= c.seo_description %></textarea></label>
+    </details>
+  </div>
+  <div class="col-side">
+    <section class="panel">
+      <h2>Imagen de portada</h2>
+      <% if (c.image) { %>
+        <img class="current-image" src="<%= c.image %>" alt="">
+        <label class="check"><input type="checkbox" name="remove_image" value="1"> Quitar imagen actual</label>
+      <% } %>
+      <label class="dropzone small-drop">
+        <%- icon('camera', 24) %><strong><%= c.image ? 'Cambiar imagen' : 'Subir imagen' %></strong>
+        <input type="file" name="image" accept="image/*" data-image-input data-preview="#cat-preview">
+      </label>
+      <div class="previews" id="cat-preview"></div>
+    </section>
+    <section class="panel">
+      <h2>Visibilidad</h2>
+      <label class="check"><input type="checkbox" name="active" value="1" <%= c.active ? 'checked' : '' %>> Visible en la tienda</label>
+      <label>Orden<input type="number" name="sort_order" value="<%= c.sort_order %>" step="1"><span class="hint">Número menor = aparece primero.</span></label>
+    </section>
+    <div class="sticky-save"><button class="btn btn-primary btn-block" type="submit"><%= c.id ? 'Guardar cambios' : 'Crear categoría' %></button></div>
+  </div>
+</form>
+<%- include('_foot') %>

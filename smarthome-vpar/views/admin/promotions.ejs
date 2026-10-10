@@ -1,0 +1,28 @@
+<%- include('_head') %>
+<div class="page-title">
+  <h1>Promociones</h1>
+  <div class="actions"><a class="btn btn-primary" href="/admin/promociones/nueva">+ Nueva promoción</a></div>
+</div>
+<p class="muted">Los banners promocionales aparecen en la sección “Promociones” de la página de inicio durante su vigencia. Los productos con precio promocional vigente también se muestran allí y en <a href="/ofertas" target="_blank">/ofertas</a>. Los precios promocionales se definen en cada producto.</p>
+<% if (!items.length) { %>
+  <div class="empty-box"><p>No hay banners promocionales.</p><a class="btn btn-primary" href="/admin/promociones/nueva">Crear promoción</a></div>
+<% } %>
+<div class="promo-admin-list">
+  <% items.forEach((pr) => {
+    const vigente = pr.active && (!pr.starts_at || pr.starts_at <= today) && (!pr.ends_at || pr.ends_at >= today);
+  %>
+  <div class="panel promo-admin <%= vigente ? '' : 'row-off' %>">
+    <% if (pr.image) { %><img src="<%= pr.image %>" alt=""><% } %>
+    <div>
+      <h2><%= pr.title %> <% if (pr.is_demo) { %><span class="tag tag-demo">Ejemplo</span><% } %></h2>
+      <p class="muted"><%= pr.subtitle %></p>
+      <p class="small"><strong><%= vigente ? 'Publicada' : (pr.active ? 'Fuera de vigencia' : 'Desactivada') %></strong> · Vigencia: <%= pr.starts_at || 'sin inicio' %> → <%= pr.ends_at || 'sin fin' %></p>
+      <div class="actions">
+        <a class="btn btn-ghost btn-sm" href="/admin/promociones/<%= pr.id %>">Editar</a>
+        <form method="post" action="/admin/promociones/<%= pr.id %>/eliminar" class="inline" data-confirm="¿Eliminar la promoción “<%= pr.title %>”?"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-danger btn-sm" type="submit">Eliminar</button></form>
+      </div>
+    </div>
+  </div>
+  <% }) %>
+</div>
+<%- include('_foot') %>

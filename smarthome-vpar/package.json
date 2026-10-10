@@ -1,0 +1,23 @@
+{
+  "name": "smarthome-vpar",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tienda virtual SmartHome_Vpar: catálogo, panel administrativo y pedidos por WhatsApp",
+  "main": "server.js",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node --no-warnings=ExperimentalWarning server.js",
+    "dev": "node --no-warnings=ExperimentalWarning --watch server.js",
+    "test": "node --no-warnings=ExperimentalWarning --test tests/store.test.js",
+    "create-admin": "node --no-warnings=ExperimentalWarning scripts/create-admin.js",
+    "backup": "node --no-warnings=ExperimentalWarning scripts/backup.js",
+    "demo-images": "node scripts/generate-demo-images.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "multer": "^2.0.2"
+  }
+}

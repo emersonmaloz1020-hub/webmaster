@@ -1,0 +1,48 @@
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<% if (locals.admin) { %>
+<div class="adminbar">
+  <span><%- icon('lock', 14) %> Sesión de administrador</span>
+  <% if (!waConfigured) { %><a href="/admin/configuracion#whatsapp" class="adminbar-warn">WhatsApp sin configurar: configúralo aquí</a><% } %>
+  <a href="/admin">Ir al panel</a>
+</div>
+<% } %>
+<header class="site-header" id="top">
+  <div class="container header-row">
+    <a href="/" class="brand" aria-label="<%= s.store_name %> — inicio">
+      <img src="<%= s.logo || '/logo.svg' %>" alt="" width="40" height="40">
+      <span><%= s.store_name %></span>
+    </a>
+    <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
+      <a href="/" class="<%= path === '/' ? 'active' : '' %>">Inicio</a>
+      <a href="/catalogo" class="<%= path.startsWith('/catalogo') || path.startsWith('/categoria') ? 'active' : '' %>">Catálogo</a>
+      <div class="nav-drop">
+        <button type="button" class="nav-drop-btn" aria-expanded="false" aria-controls="cat-menu">Categorías <%- icon('right', 14, 'rot90') %></button>
+        <div class="nav-drop-menu" id="cat-menu">
+          <% (locals.navCategories || []).forEach((c) => { %>
+            <a href="/categoria/<%= c.slug %>"><%- icon(c.icon, 18) %> <%= c.name %></a>
+          <% }) %>
+        </div>
+      </div>
+      <a href="/ofertas" class="<%= path === '/ofertas' ? 'active' : '' %>">Ofertas</a>
+      <a href="/contacto" class="<%= path === '/contacto' ? 'active' : '' %>">Contacto</a>
+    </nav>
+    <form class="header-search" action="/catalogo" method="get" role="search">
+      <label for="hq" class="sr-only">Buscar productos</label>
+      <input id="hq" type="search" name="q" placeholder="Buscar cámaras, Alexa, enchufes…" value="<%= locals.query && query.q ? query.q : '' %>" autocomplete="off">
+      <button type="submit" aria-label="Buscar"><%- icon('search', 18) %></button>
+    </form>
+    <div class="header-actions">
+      <% if (waGeneral) { %>
+        <a class="btn btn-wa btn-sm hide-sm" href="<%= waGeneral %>" target="_blank" rel="noopener"><%- icon('whatsapp', 18) %><span>WhatsApp</span></a>
+      <% } %>
+      <% if (cartEnabled) { %>
+        <a class="icon-btn cart-link" href="/carrito" aria-label="Carrito de compras">
+          <%- icon('cart', 22) %><span class="cart-count" data-cart-count hidden>0</span>
+        </a>
+      <% } %>
+      <button type="button" class="icon-btn menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-nav"><%- icon('menu', 24) %></button>
+    </div>
+  </div>
+</header>
+<main id="contenido">

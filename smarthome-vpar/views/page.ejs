@@ -1,0 +1,10 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<div class="container narrow">
+  <nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="/">Inicio</a><span>/</span><span aria-current="page"><%= title %></span></nav>
+  <article class="detail-block page-body">
+    <h1><%= title %></h1>
+    <div class="prose"><% body.split(/\n{2,}/).forEach((para) => { %><p><%= para %></p><% }) %></div>
+  </article>
+</div>
+<%- include('partials/footer') %>

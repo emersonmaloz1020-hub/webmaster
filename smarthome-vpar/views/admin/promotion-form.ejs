@@ -1,0 +1,39 @@
+<%- include('_head') %>
+<div class="page-title">
+  <h1><%= pr.id ? 'Editar promoción' : 'Nueva promoción' %></h1>
+  <div class="actions"><a class="btn btn-ghost" href="/admin/promociones">← Volver</a></div>
+</div>
+<form method="post" action="<%= pr.id ? '/admin/promociones/' + pr.id : '/admin/promociones' %>" enctype="multipart/form-data" class="form form-grid" data-dirty-check>
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="col-main">
+    <section class="panel">
+      <h2>Contenido</h2>
+      <label>Título *<input name="title" value="<%= pr.title %>" required maxlength="120"></label>
+      <label>Texto<textarea name="subtitle" rows="3" maxlength="300"><%= pr.subtitle %></textarea></label>
+      <div class="row-2">
+        <label>Texto del botón<input name="button_text" value="<%= pr.button_text %>" maxlength="40"></label>
+        <label>Enlace del botón<input name="link_url" value="<%= pr.link_url %>" maxlength="300" placeholder="/producto/mi-producto o /categoria/..."><span class="hint">Copia la dirección de un producto o categoría de tu tienda.</span></label>
+      </div>
+    </section>
+  </div>
+  <div class="col-side">
+    <section class="panel">
+      <h2>Imagen del banner</h2>
+      <% if (pr.image) { %><img class="current-image" src="<%= pr.image %>" alt=""><label class="check"><input type="checkbox" name="remove_image" value="1"> Quitar imagen</label><% } %>
+      <label class="dropzone small-drop"><%- icon('camera', 24) %><strong>Subir imagen</strong><span class="hint">Formato horizontal recomendado (1200 × 500).</span>
+        <input type="file" name="image" accept="image/*" data-image-input data-preview="#promo-preview"></label>
+      <div class="previews" id="promo-preview"></div>
+    </section>
+    <section class="panel">
+      <h2>Vigencia</h2>
+      <label class="check"><input type="checkbox" name="active" value="1" <%= pr.active ? 'checked' : '' %>> Activa</label>
+      <div class="row-2">
+        <label>Desde<input type="date" name="starts_at" value="<%= pr.starts_at || '' %>"></label>
+        <label>Hasta<input type="date" name="ends_at" value="<%= pr.ends_at || '' %>"></label>
+      </div>
+      <label>Orden<input type="number" name="sort_order" value="<%= pr.sort_order %>"></label>
+    </section>
+    <div class="sticky-save"><button class="btn btn-primary btn-block" type="submit">Guardar promoción</button></div>
+  </div>
+</form>
+<%- include('_foot') %>

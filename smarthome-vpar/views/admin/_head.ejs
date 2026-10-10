@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title><%= (locals.meta && meta.title) || 'Panel' %> · Panel <%= s.store_name %></title>
+<link rel="icon" href="<%= s.favicon || s.logo || '/logo.svg' %>">
+<link rel="stylesheet" href="/css/admin.css?v=1">
+</head>
+<body class="admin">
+<% if (locals.admin) {
+  const nav = [
+    ['/admin', 'grid', 'Escritorio'],
+    ['/admin/productos', 'tag', 'Productos'],
+    ['/admin/categorias', 'home', 'Categorías'],
+    ['/admin/promociones', 'star', 'Promociones'],
+    ['/admin/apariencia', 'bulb', 'Apariencia'],
+    ['/admin/configuracion', 'whatsapp', 'Configuración'],
+    ['/admin/pedidos', 'cart', 'Pedidos'],
+    ['/admin/respaldo', 'shield', 'Respaldo y datos'],
+    ['/admin/cuenta', 'lock', 'Mi cuenta'],
+  ];
+  const fullPath = (locals.path || '').replace(/\/$/, '') || '/admin';
+%>
+<header class="topbar">
+  <button type="button" class="icon-btn side-toggle" aria-label="Abrir menú del panel" aria-expanded="false" aria-controls="sidebar"><%- icon('menu', 22) %></button>
+  <a href="/admin" class="brand"><img src="<%= s.logo || '/logo.svg' %>" alt="" width="32" height="32"><span><%= s.store_name %> <small>Panel</small></span></a>
+  <div class="topbar-actions">
+    <a class="btn btn-ghost btn-sm" href="/" target="_blank" rel="noopener">Ver tienda ↗</a>
+    <form method="post" action="/admin/logout"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-ghost btn-sm" type="submit">Cerrar sesión</button></form>
+  </div>
+</header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Menú del panel">
+    <% nav.forEach(([href, ic, label]) => { const active = href === '/admin' ? fullPath === '/admin' : fullPath.startsWith(href); %>
+      <a href="<%= href %>" class="<%= active ? 'active' : '' %>"><%- icon(ic, 18) %> <%= label %></a>
+    <% }) %>
+    <p class="side-user">Sesión: <strong><%= admin.username %></strong></p>
+  </nav>
+  <main class="content" id="contenido">
+<% } else { %>
+  <main class="content auth-content" id="contenido">
+<% } %>
+<% if (locals.flash) { %>
+  <div class="flash flash-<%= flash.type %>" role="status"><%= flash.text %></div>
+<% } %>
+<% if (locals.errors && errors.length) { %>
+  <div class="flash flash-error" role="alert"><strong>Revisa lo siguiente:</strong><ul><% errors.forEach((e) => { %><li><%= e %></li><% }) %></ul></div>
+<% } %>

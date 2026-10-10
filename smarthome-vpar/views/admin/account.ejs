@@ -1,0 +1,32 @@
+<%- include('_head') %>
+<div class="page-title"><h1>Mi cuenta</h1></div>
+<div class="grid-2">
+  <section class="panel">
+    <h2>Cambiar contraseña</h2>
+    <form method="post" action="/admin/cuenta/clave" class="form">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <label>Contraseña actual<input type="password" name="current" required autocomplete="current-password"></label>
+      <label>Nueva contraseña<input type="password" name="password" required minlength="10" autocomplete="new-password"><span class="hint">Mínimo 10 caracteres, con letras y números.</span></label>
+      <label>Repite la nueva contraseña<input type="password" name="password2" required minlength="10" autocomplete="new-password"></label>
+      <button class="btn btn-primary" type="submit">Actualizar contraseña</button>
+    </form>
+  </section>
+  <section class="panel">
+    <h2>Administradores</h2>
+    <ul class="plain">
+      <% admins.forEach((a) => { %>
+        <li class="admin-row"><span><strong><%= a.username %></strong> <span class="muted small">desde <%= a.created_at.slice(0, 10) %></span></span>
+          <% if (a.id !== admin.id) { %><form method="post" action="/admin/cuenta/usuarios/<%= a.id %>/eliminar" class="inline" data-confirm="¿Eliminar al administrador <%= a.username %>?"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-danger btn-xs" type="submit">Eliminar</button></form><% } else { %><span class="tag">Tú</span><% } %>
+        </li>
+      <% }) %>
+    </ul>
+    <h3>Agregar administrador</h3>
+    <form method="post" action="/admin/cuenta/usuarios" class="form">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <label>Usuario<input name="username" required autocapitalize="none" maxlength="40"></label>
+      <label>Contraseña<input type="password" name="password" required minlength="10" autocomplete="new-password"></label>
+      <button class="btn btn-ghost" type="submit">Crear administrador</button>
+    </form>
+  </section>
+</div>
+<%- include('_foot') %>

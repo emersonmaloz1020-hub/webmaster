@@ -1,0 +1,23 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<div class="container narrow">
+  <nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="/">Inicio</a><span>/</span><span aria-current="page">Contacto</span></nav>
+  <section class="detail-block page-body">
+    <h1>Contacto</h1>
+    <p class="lead">Estamos para ayudarte a elegir la mejor solución para tu hogar o negocio.</p>
+    <div class="contact-cards">
+      <% if (waGeneral) { %>
+        <a class="contact-card" href="<%= waGeneral %>" target="_blank" rel="noopener"><span class="benefit-icon"><%- icon('whatsapp', 26) %></span><strong>WhatsApp</strong><span>+<%= h.onlyDigits(s.whatsapp_number) %></span></a>
+      <% } %>
+      <% if (s.phone) { %><a class="contact-card" href="tel:<%= h.onlyDigits(s.phone) %>"><span class="benefit-icon"><%- icon('phone', 26) %></span><strong>Teléfono</strong><span><%= s.phone %></span></a><% } %>
+      <% if (s.email) { %><a class="contact-card" href="mailto:<%= s.email %>"><span class="benefit-icon"><%- icon('mail', 26) %></span><strong>Correo</strong><span><%= s.email %></span></a><% } %>
+      <% if (s.address || s.city) { %><div class="contact-card"><span class="benefit-icon"><%- icon('pin', 26) %></span><strong>Ubicación</strong><span><%= [s.address, s.city].filter(Boolean).join(', ') %></span></div><% } %>
+      <% if (s.hours) { %><div class="contact-card"><span class="benefit-icon"><%- icon('clock', 26) %></span><strong>Horario de atención</strong><span><%= s.hours %></span></div><% } %>
+    </div>
+    <% if (!waGeneral && !s.phone && !s.email && !s.address && !s.hours) { %>
+      <div class="empty"><%- icon('chat', 32) %><p>Muy pronto publicaremos nuestros canales de atención.</p></div>
+    <% } %>
+    <% if (s.shipping_note) { %><div class="notice notice-info mt"><%- icon('star', 16) %> <%= s.shipping_note %></div><% } %>
+  </section>
+</div>
+<%- include('partials/footer') %>

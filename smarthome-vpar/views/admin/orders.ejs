@@ -1,0 +1,29 @@
+<%- include('_head') %>
+<div class="page-title"><h1>Pedidos</h1></div>
+<% if (!cartEnabled) { %><div class="flash flash-info">El carrito está deshabilitado: los clientes consultan y compran directamente por WhatsApp. Puedes habilitarlo en <a href="/admin/configuracion#venta">Configuración → Modalidad de venta</a>.</div><% } %>
+<% if (!orders.length) { %>
+  <div class="empty-box"><p>Aún no hay pedidos registrados.</p></div>
+<% } else { %>
+<div class="orders">
+  <% orders.forEach((o) => { %>
+  <article class="panel order">
+    <header class="order-head">
+      <div><strong><%= o.code %></strong> <span class="tag tag-status-<%= o.status %>"><%= statuses[o.status] || o.status %></span><br><span class="muted small"><%= o.created_at %> (UTC)</span></div>
+      <strong class="order-total"><%= h.formatCOP(o.total) %></strong>
+    </header>
+    <p><strong><%= o.customer_name %></strong> · <a href="https://wa.me/<%= h.onlyDigits(o.customer_phone).length === 10 ? '57' + o.customer_phone : o.customer_phone %>" target="_blank" rel="noopener"><%= o.customer_phone %></a><%= o.customer_city ? ' · ' + o.customer_city : '' %></p>
+    <ul class="plain small"><% o.items.forEach((i) => { %><li><%= i.qty %> × <%= i.name %> — <%= h.formatCOP(i.subtotal) %></li><% }) %></ul>
+    <% if (o.notes) { %><p class="small muted">Notas: <%= o.notes %></p><% } %>
+    <div class="actions">
+      <form method="post" action="/admin/pedidos/<%= o.id %>/estado" class="inline">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <select name="status" aria-label="Estado del pedido"><% Object.entries(statuses).forEach(([k, l]) => { %><option value="<%= k %>" <%= o.status === k ? 'selected' : '' %>><%= l %></option><% }) %></select>
+        <button class="btn btn-ghost btn-sm" type="submit">Actualizar estado</button>
+      </form>
+      <form method="post" action="/admin/pedidos/<%= o.id %>/eliminar" class="inline" data-confirm="¿Eliminar el pedido <%= o.code %>?"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-danger btn-sm" type="submit">Eliminar</button></form>
+    </div>
+  </article>
+  <% }) %>
+</div>
+<% } %>
+<%- include('_foot') %>

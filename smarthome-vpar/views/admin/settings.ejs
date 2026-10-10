@@ -1,0 +1,65 @@
+<%- include('_head') %>
+<div class="page-title"><h1>Configuración comercial</h1></div>
+<form method="post" action="/admin/configuracion" class="form" data-dirty-check>
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <section class="panel" id="whatsapp">
+    <h2><%- icon('whatsapp', 20) %> WhatsApp</h2>
+    <% if (!waConfigured) { %><div class="flash flash-warn">Aún no has configurado tu número. Mientras tanto, los botones de WhatsApp no se muestran en la tienda.</div><% } %>
+    <label>Número de WhatsApp Business<input name="whatsapp_number" value="<%= s.whatsapp_number %>" inputmode="tel" placeholder="573001234567" maxlength="20"><span class="hint">Con indicativo de país y sin espacios ni “+”. Colombia: 57 + número de 10 dígitos.</span></label>
+    <label>Mensaje para consultar un producto<textarea name="whatsapp_message" rows="3" maxlength="600"><%= s.whatsapp_message %></textarea><span class="hint">Variables disponibles: <code>{producto}</code>, <code>{precio}</code> y <code>{enlace}</code>. Si no usas <code>{enlace}</code>, el enlace de la ficha se agrega al final.</span></label>
+    <label>Mensaje general (botón flotante y encabezado)<textarea name="whatsapp_general_message" rows="2" maxlength="600"><%= s.whatsapp_general_message %></textarea></label>
+    <% if (waConfigured) { %><p><a class="btn btn-ghost btn-sm" href="<%= waGeneral %>" target="_blank" rel="noopener">Probar enlace de WhatsApp ↗</a></p><% } %>
+  </section>
+
+  <section class="panel" id="venta">
+    <h2>Modalidad de venta</h2>
+    <label class="check"><input type="checkbox" name="cart_enabled" value="1" <%= cartEnabled ? 'checked' : '' %>> Habilitar carrito de compras (pedidos con varios productos)</label>
+    <p class="hint">Desactivado: catálogo con consultas y pedidos por WhatsApp (modalidad inicial). Activado: los clientes arman un carrito, el pedido se registra en <a href="/admin/pedidos">Pedidos</a> y se envía por WhatsApp. No se cobra en línea: los pagos con pasarela (Wompi, Mercado Pago) requieren una integración adicional descrita en la documentación.</p>
+    <label>Nota sobre envíos y pagos<input name="shipping_note" value="<%= s.shipping_note %>" maxlength="300" placeholder="Ej.: Envíos a todo el país. El valor se confirma por WhatsApp."><span class="hint">Se muestra en el carrito y en contacto. Escribe solo condiciones reales.</span></label>
+    <p class="small">Moneda: <strong>Peso colombiano (COP)</strong></p>
+  </section>
+
+  <section class="panel" id="contacto">
+    <h2>Datos comerciales y contacto</h2>
+    <div class="row-2">
+      <label>Razón social o nombre comercial<input name="business_name" value="<%= s.business_name %>" maxlength="120"></label>
+      <label>NIT / documento<input name="business_id" value="<%= s.business_id %>" maxlength="40"></label>
+      <label>Teléfono<input name="phone" value="<%= s.phone %>" maxlength="40"></label>
+      <label>Correo electrónico<input type="email" name="email" value="<%= s.email %>" maxlength="120"></label>
+      <label>Dirección<input name="address" value="<%= s.address %>" maxlength="200"></label>
+      <label>Ciudad<input name="city" value="<%= s.city %>" maxlength="80"></label>
+    </div>
+    <label>Horario de atención<input name="hours" value="<%= s.hours %>" maxlength="200" placeholder="Ej.: Lunes a sábado, 8:00 a. m. – 6:00 p. m."></label>
+  </section>
+
+  <section class="panel" id="redes">
+    <h2>Redes sociales</h2>
+    <div class="row-2">
+      <label>Instagram<input name="social_instagram" value="<%= s.social_instagram %>" placeholder="https://instagram.com/..."></label>
+      <label>Facebook<input name="social_facebook" value="<%= s.social_facebook %>" placeholder="https://facebook.com/..."></label>
+      <label>TikTok<input name="social_tiktok" value="<%= s.social_tiktok %>" placeholder="https://tiktok.com/@..."></label>
+      <label>YouTube<input name="social_youtube" value="<%= s.social_youtube %>" placeholder="https://youtube.com/..."></label>
+    </div>
+  </section>
+
+  <section class="panel" id="politicas">
+    <h2>Políticas</h2>
+    <p class="hint">Cada política aparece en el pie de página solo cuando tiene contenido. Te recomendamos revisarlas con un asesor legal (en Colombia aplican, entre otras, la Ley 1581 de 2012 de protección de datos y el Estatuto del Consumidor, Ley 1480 de 2011).</p>
+    <label>Política de privacidad y tratamiento de datos<textarea name="policy_privacy" rows="5"><%= s.policy_privacy %></textarea></label>
+    <label>Política de envíos<textarea name="policy_shipping" rows="5"><%= s.policy_shipping %></textarea></label>
+    <label>Cambios y devoluciones<textarea name="policy_returns" rows="5"><%= s.policy_returns %></textarea></label>
+    <label>Garantías<textarea name="policy_warranty" rows="5"><%= s.policy_warranty %></textarea></label>
+  </section>
+
+  <section class="panel" id="seo">
+    <h2>SEO y dirección pública</h2>
+    <label>Dirección pública de la tienda<input name="site_url" value="<%= s.site_url %>" placeholder="https://www.smarthomevpar.com" maxlength="200"><span class="hint">Se usa en los enlaces enviados por WhatsApp, el sitemap y al compartir en redes. Déjalo vacío mientras pruebas.</span></label>
+    <label>Título de la página de inicio<input name="seo_title" value="<%= s.seo_title %>" maxlength="120"></label>
+    <label>Descripción para buscadores<textarea name="seo_description" rows="3" maxlength="300"><%= s.seo_description %></textarea></label>
+    <p class="hint">Sitemap: <a href="/sitemap.xml" target="_blank"><%= origin %>/sitemap.xml</a> · Robots: <a href="/robots.txt" target="_blank">/robots.txt</a></p>
+  </section>
+
+  <div class="sticky-save bar"><button class="btn btn-primary" type="submit">Guardar configuración</button></div>
+</form>
+<%- include('_foot') %>

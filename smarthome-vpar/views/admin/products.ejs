@@ -1,0 +1,67 @@
+<%- include('_head') %>
+<div class="page-title">
+  <h1>Productos</h1>
+  <div class="actions"><a class="btn btn-primary" href="/admin/productos/nuevo">+ Nuevo producto</a></div>
+</div>
+<form method="get" class="toolbar">
+  <input type="search" name="q" value="<%= q %>" placeholder="Buscar por nombre, marca, modelo…" aria-label="Buscar productos">
+  <select name="categoria" aria-label="Categoría">
+    <option value="">Todas las categorías</option>
+    <% categories.forEach((c) => { %><option value="<%= c.id %>" <%= cat === c.id ? 'selected' : '' %>><%= c.name %></option><% }) %>
+  </select>
+  <select name="estado" aria-label="Estado">
+    <% [['','Todos los estados'],['activos','Activos'],['inactivos','Desactivados'],['destacados','Destacados'],['agotados','Agotados']].forEach(([v,l]) => { %><option value="<%= v %>" <%= estado === v ? 'selected' : '' %>><%= l %></option><% }) %>
+  </select>
+  <button class="btn btn-ghost" type="submit">Filtrar</button>
+</form>
+<% if (!items.length) { %>
+  <div class="empty-box"><p>No hay productos con estos criterios.</p><a class="btn btn-primary" href="/admin/productos/nuevo">Crear el primer producto</a></div>
+<% } else { %>
+<p class="muted small"><%= items.length %> producto(s)</p>
+<div class="table-wrap">
+<table class="table">
+  <thead><tr><th>Producto</th><th>Precio</th><th>Existencias</th><th>Estado</th><th class="right">Acciones</th></tr></thead>
+  <tbody>
+  <% items.forEach((p) => { %>
+    <tr class="<%= p.active ? '' : 'row-off' %>">
+      <td data-label="Producto">
+        <div class="prod-cell">
+          <% if (p.image) { %><img src="<%= p.image.path %>" alt="" width="52" height="52"><% } else { %><span class="noimg"><%- icon('camera', 20) %></span><% } %>
+          <div>
+            <a href="/admin/productos/<%= p.id %>" class="strong"><%= p.name %></a>
+            <div class="tags">
+              <% if (p.is_demo) { %><span class="tag tag-demo">Ejemplo</span><% } %>
+              <% if (p.featured) { %><span class="tag">Destacado</span><% } %>
+              <% if (p.is_new) { %><span class="tag">Nuevo</span><% } %>
+              <% if (p.pricing.onSale || p.is_offer) { %><span class="tag tag-sale">Oferta</span><% } %>
+              <span class="muted small"><%= p.categories.map((c) => c.name).join(', ') || 'Sin categoría' %></span>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td data-label="Precio"><strong><%= h.formatCOP(p.pricing.current) %></strong><% if (p.pricing.previous) { %><br><s class="muted small"><%= h.formatCOP(p.pricing.previous) %></s><% } %></td>
+      <td data-label="Existencias"><%= p.stock === null ? '—' : p.stock %><br><span class="avail-<%= p.avail.css %> small"><%= p.avail.label %></span></td>
+      <td data-label="Estado">
+        <form method="post" action="/admin/productos/<%= p.id %>/estado" class="inline">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="field" value="active">
+          <button type="submit" class="switch <%= p.active ? 'on' : '' %>" aria-pressed="<%= p.active ? 'true' : 'false' %>" title="Activar o desactivar"><span></span><%= p.active ? 'Visible' : 'Oculto' %></button>
+        </form>
+        <form method="post" action="/admin/productos/<%= p.id %>/estado" class="inline">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="field" value="featured">
+          <button type="submit" class="star-btn <%= p.featured ? 'on' : '' %>" aria-pressed="<%= p.featured ? 'true' : 'false' %>" title="Marcar como destacado"><%- icon('star', 18) %></button>
+        </form>
+      </td>
+      <td data-label="Acciones" class="right nowrap">
+        <a class="btn btn-ghost btn-sm" href="/admin/productos/<%= p.id %>">Editar</a>
+        <a class="btn btn-ghost btn-sm" href="/producto/<%= p.slug %>" target="_blank" rel="noopener">Ver</a>
+        <form method="post" action="/admin/productos/<%= p.id %>/eliminar" class="inline" data-confirm="¿Eliminar definitivamente “<%= p.name %>” y sus fotografías? Esta acción no se puede deshacer. Si solo quieres ocultarlo, usa el botón Visible/Oculto.">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-danger btn-sm" type="submit">Eliminar</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+</div>
+<% } %>
+<%- include('_foot') %>

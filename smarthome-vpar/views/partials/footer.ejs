@@ -1,0 +1,54 @@
+</main>
+<footer class="site-footer" id="contacto">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="brand"><img src="<%= s.logo || '/logo.svg' %>" alt="" width="40" height="40"><span><%= s.store_name %></span></a>
+      <p><%= s.footer_text %></p>
+      <div class="socials">
+        <% [['instagram','Instagram'],['facebook','Facebook'],['tiktok','TikTok'],['youtube','YouTube']].forEach(([k, label]) => { if (s['social_' + k]) { %>
+          <a href="<%= s['social_' + k] %>" target="_blank" rel="noopener" aria-label="<%= label %>"><%- icon(k, 20) %></a>
+        <% } }) %>
+      </div>
+    </div>
+    <div>
+      <h3>Tienda</h3>
+      <ul>
+        <li><a href="/catalogo">Catálogo completo</a></li>
+        <li><a href="/ofertas">Ofertas</a></li>
+        <% (locals.navCategories || []).slice(0, 5).forEach((c) => { %><li><a href="/categoria/<%= c.slug %>"><%= c.name %></a></li><% }) %>
+      </ul>
+    </div>
+    <div>
+      <h3>Contacto</h3>
+      <ul class="contact-list">
+        <% if (waGeneral) { %><li><%- icon('whatsapp', 18) %><a href="<%= waGeneral %>" target="_blank" rel="noopener">Escríbenos por WhatsApp</a></li><% } %>
+        <% if (s.phone) { %><li><%- icon('phone', 18) %><a href="tel:<%= h.onlyDigits(s.phone) %>"><%= s.phone %></a></li><% } %>
+        <% if (s.email) { %><li><%- icon('mail', 18) %><a href="mailto:<%= s.email %>"><%= s.email %></a></li><% } %>
+        <% if (s.address || s.city) { %><li><%- icon('pin', 18) %><span><%= [s.address, s.city].filter(Boolean).join(', ') %></span></li><% } %>
+        <% if (s.hours) { %><li><%- icon('clock', 18) %><span><%= s.hours %></span></li><% } %>
+        <% if (!waGeneral && !s.phone && !s.email && !s.address && !s.hours) { %><li class="muted">Información de contacto próximamente.</li><% } %>
+      </ul>
+    </div>
+    <div>
+      <h3>Información</h3>
+      <ul>
+        <li><a href="/contacto">Contacto</a></li>
+        <% if (s.policy_privacy) { %><li><a href="/politicas/privacidad">Política de privacidad</a></li><% } %>
+        <% if (s.policy_shipping) { %><li><a href="/politicas/envios">Envíos</a></li><% } %>
+        <% if (s.policy_returns) { %><li><a href="/politicas/devoluciones">Cambios y devoluciones</a></li><% } %>
+        <% if (s.policy_warranty) { %><li><a href="/politicas/garantias">Garantías</a></li><% } %>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© <%= new Date().getFullYear() %> <%= s.business_name || s.store_name %><%= s.business_id ? ' · NIT ' + s.business_id : '' %>. Precios en pesos colombianos (COP).</span>
+    <a href="#top">Volver arriba ↑</a>
+  </div>
+</footer>
+<% if (waGeneral) { %>
+<a class="wa-float" href="<%= waGeneral %>" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><%- icon('whatsapp', 30) %></a>
+<% } %>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<script src="/js/app.js?v=1" defer></script>
+</body>
+</html>

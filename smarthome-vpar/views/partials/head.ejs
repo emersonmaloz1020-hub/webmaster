@@ -1,0 +1,48 @@
+<%
+  const m = locals.meta || {};
+  const pageTitle = m.title || s.seo_title;
+  const pageDesc = m.description || s.seo_description;
+  const abs = (u) => (u && u.startsWith('/') ? origin + u : u);
+  const ogImage = abs(m.image || s.og_image || s.hero_image);
+  const fontParam = (f) => f.replace(/ /g, '+');
+  const fonts = [...new Set([s.font_body, s.font_heading])].filter((f) => f && f !== 'Sistema');
+  const fontStack = (f) => (f && f !== 'Sistema' ? `'${f}', ` : '') + "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif";
+%>
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= pageTitle %></title>
+<meta name="description" content="<%= pageDesc %>">
+<% if (m.noindex) { %><meta name="robots" content="noindex, follow"><% } %>
+<% if (m.canonical) { %><link rel="canonical" href="<%= origin + m.canonical %>"><% } %>
+<meta property="og:site_name" content="<%= s.store_name %>">
+<meta property="og:locale" content="es_CO">
+<meta property="og:type" content="<%= m.type || 'website' %>">
+<meta property="og:title" content="<%= pageTitle %>">
+<meta property="og:description" content="<%= pageDesc %>">
+<% if (m.canonical) { %><meta property="og:url" content="<%= origin + m.canonical %>"><% } %>
+<% if (ogImage) { %><meta property="og:image" content="<%= ogImage %>"><% } %>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="<%= s.color_bg %>">
+<link rel="icon" href="<%= s.favicon || s.logo || '/logo.svg' %>">
+<% if (fonts.length) { %>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?<%= fonts.map((f) => `family=${fontParam(f)}:wght@400;500;600;700`).join('&') %>&display=swap">
+<% } %>
+<link rel="stylesheet" href="/css/styles.css?v=1">
+<style>
+:root{
+  --bg:<%= s.color_bg %>;
+  --surface:<%= s.color_surface %>;
+  --primary:<%= s.color_primary %>;
+  --accent:<%= s.color_accent %>;
+  --text:<%= s.color_text %>;
+  --font-body:<%- fontStack(s.font_body) %>;
+  --font-heading:<%- fontStack(s.font_heading) %>;
+}
+</style>
+<% if (locals.jsonLd) { %><script type="application/ld+json"><%- jsonLd %></script><% } %>
+</head>

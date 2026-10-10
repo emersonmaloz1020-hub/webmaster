@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+
+<defs>
+  <radialGradient id="bgc3" cx="50%" cy="42%" r="75%">
+    <stop offset="0" stop-color="#12233d"/><stop offset=".55" stop-color="#0a1322"/><stop offset="1" stop-color="#04070d"/>
+  </radialGradient>
+  <radialGradient id="glowc3" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="bodyc3" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f4f7fb"/><stop offset="1" stop-color="#b9c3d1"/>
+  </linearGradient>
+  <linearGradient id="darkc3" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2a3446"/><stop offset="1" stop-color="#0d121b"/>
+  </linearGradient>
+  <linearGradient id="accc3" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e7bff"/><stop offset="1" stop-color="#22d3ee"/>
+  </linearGradient>
+  <pattern id="gridc3" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1e7bff" stroke-opacity=".08" stroke-width="1"/>
+  </pattern>
+  <filter id="softc3" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<defs>
+  <radialGradient id="bgc3a" cx="50%" cy="42%" r="75%">
+    <stop offset="0" stop-color="#12233d"/><stop offset=".55" stop-color="#0a1322"/><stop offset="1" stop-color="#04070d"/>
+  </radialGradient>
+  <radialGradient id="glowc3a" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="bodyc3a" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f4f7fb"/><stop offset="1" stop-color="#b9c3d1"/>
+  </linearGradient>
+  <linearGradient id="darkc3a" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2a3446"/><stop offset="1" stop-color="#0d121b"/>
+  </linearGradient>
+  <linearGradient id="accc3a" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e7bff"/><stop offset="1" stop-color="#22d3ee"/>
+  </linearGradient>
+  <pattern id="gridc3a" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1e7bff" stroke-opacity=".08" stroke-width="1"/>
+  </pattern>
+  <filter id="softc3a" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<defs>
+  <radialGradient id="bgc3b" cx="50%" cy="42%" r="75%">
+    <stop offset="0" stop-color="#12233d"/><stop offset=".55" stop-color="#0a1322"/><stop offset="1" stop-color="#04070d"/>
+  </radialGradient>
+  <radialGradient id="glowc3b" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="bodyc3b" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f4f7fb"/><stop offset="1" stop-color="#b9c3d1"/>
+  </linearGradient>
+  <linearGradient id="darkc3b" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2a3446"/><stop offset="1" stop-color="#0d121b"/>
+  </linearGradient>
+  <linearGradient id="accc3b" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e7bff"/><stop offset="1" stop-color="#22d3ee"/>
+  </linearGradient>
+  <pattern id="gridc3b" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1e7bff" stroke-opacity=".08" stroke-width="1"/>
+  </pattern>
+  <filter id="softc3b" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<defs>
+  <radialGradient id="bgc3c" cx="50%" cy="42%" r="75%">
+    <stop offset="0" stop-color="#12233d"/><stop offset=".55" stop-color="#0a1322"/><stop offset="1" stop-color="#04070d"/>
+  </radialGradient>
+  <radialGradient id="glowc3c" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="bodyc3c" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f4f7fb"/><stop offset="1" stop-color="#b9c3d1"/>
+  </linearGradient>
+  <linearGradient id="darkc3c" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2a3446"/><stop offset="1" stop-color="#0d121b"/>
+  </linearGradient>
+  <linearGradient id="accc3c" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e7bff"/><stop offset="1" stop-color="#22d3ee"/>
+  </linearGradient>
+  <pattern id="gridc3c" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1e7bff" stroke-opacity=".08" stroke-width="1"/>
+  </pattern>
+  <filter id="softc3c" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<rect width="800" height="600" fill="url(#bgc3)"/>
+<rect width="800" height="600" fill="url(#gridc3)"/>
+<circle cx="400" cy="290" r="228" fill="url(#glowc3)"/>
+<g transform="translate(400 310) scale(0.9)">
+    <ellipse cx="0" cy="160" rx="140" ry="16" fill="#000" opacity=".45"/>
+    <rect x="-30" y="40" width="60" height="110" rx="12" fill="url(#bodyc3)"/>
+    <rect x="-80" y="140" width="160" height="22" rx="8" fill="url(#bodyc3)"/>
+    <path d="M-150 -70 h230 a40 40 0 0 1 40 40 v60 a40 40 0 0 1 -40 40 h-230 z" fill="url(#bodyc3)"/>
+    <path d="M-170 -88 h250 a20 20 0 0 1 20 20 v10 h-270 z" fill="#d7dee8"/>
+    <rect x="70" y="-62" width="44" height="114" rx="20" fill="url(#darkc3)"/>
+    
+  <circle cx="92" cy="-5" r="28" fill="#05080d" stroke="#3a4558" stroke-width="3.36"/>
+  <circle cx="92" cy="-5" r="17.36" fill="url(#accc3)" opacity=".55"/>
+  <circle cx="92" cy="-5" r="10.08" fill="#020409"/>
+  <circle cx="85" cy="-12.84" r="3.9200000000000004" fill="#fff" opacity=".7"/>
+    <circle cx="-110" cy="-20" r="5" fill="#22d3ee"/>
+    <path d="M-60 -150 v40 M-20 -150 v40" stroke="#c9d2de" stroke-width="10" stroke-linecap="round"/></g>
+<text x="782" y="582" text-anchor="end" font-family="Arial, sans-serif" font-size="15" letter-spacing="2" fill="#8fb3d9" opacity=".75">IMAGEN DE EJEMPLO</text>
+</svg>

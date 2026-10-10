@@ -1,0 +1,26 @@
+# Despliegue en Render (https://render.com) con disco persistente para la base de datos y las fotografías.
+# El disco persistente requiere un plan de pago en Render. Revisa precios vigentes antes de crear el servicio.
+services:
+  - type: web
+    name: smarthome-vpar
+    runtime: node
+    rootDir: smarthome-vpar
+    plan: starter
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATA_DIR
+        value: /var/data
+      - key: ADMIN_USER
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+    disk:
+      name: smarthome-data
+      mountPath: /var/data
+      sizeGB: 1

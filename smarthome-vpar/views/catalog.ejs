@@ -1,0 +1,136 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<%
+  const checked = (list, v) => list.map((x) => x.toLowerCase()).includes(String(v).toLowerCase()) ? 'checked' : '';
+  const activeFilters = filters.brands.length + filters.connectivity.length + filters.compatibility.length + selectedCats.length + (filters.min ? 1 : 0) + (filters.max ? 1 : 0) + (filters.offers ? 1 : 0) + (filters.inStock ? 1 : 0);
+%>
+<section class="page-head <%= category && category.image ? 'with-image' : '' %>">
+  <% if (category && category.image) { %><img class="page-head-bg" src="<%= category.image %>" alt="" aria-hidden="true"><% } %>
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Ruta de navegación">
+      <a href="/">Inicio</a><span>/</span><a href="/catalogo">Catálogo</a>
+      <% if (category) { %><span>/</span><span aria-current="page"><%= category.name %></span><% } %>
+    </nav>
+    <h1><%= category ? category.name : (filters.q ? `Resultados para “${filters.q}”` : (filters.offers ? 'Ofertas y promociones' : 'Catálogo de productos')) %></h1>
+    <% if (category && category.description) { %><p class="lead"><%= category.description %></p><% } %>
+    <% if (subcategories.length) { %>
+      <div class="chip-row">
+        <% subcategories.forEach((c) => { %><a class="chip" href="/categoria/<%= c.slug %>"><%- icon(c.icon, 16) %> <%= c.name %></a><% }) %>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<div class="container catalog-layout">
+  <aside class="filters" id="filtros" aria-label="Filtros">
+    <form method="get" action="<%= path %>" class="filter-form">
+      <div class="filters-head">
+        <h2><%- icon('filter', 18) %> Filtros</h2>
+        <button type="button" class="icon-btn filters-close" aria-label="Cerrar filtros"><%- icon('close', 20) %></button>
+      </div>
+      <div class="filter-group">
+        <label for="fq" class="filter-title">Buscar</label>
+        <input id="fq" type="search" name="q" value="<%= filters.q %>" placeholder="Nombre, marca o palabra clave">
+      </div>
+      <% if (!category) { %>
+      <fieldset class="filter-group">
+        <legend class="filter-title">Categoría</legend>
+        <% (locals.navCategories || []).forEach((c) => { %>
+          <label class="check"><input type="checkbox" name="categoria" value="<%= c.slug %>" <%= checked(selectedCats, c.slug) %>> <%= c.name %> <span class="count"><%= c.product_count %></span></label>
+        <% }) %>
+      </fieldset>
+      <% } %>
+      <% if (facets.brands.length) { %>
+      <fieldset class="filter-group">
+        <legend class="filter-title">Marca</legend>
+        <% facets.brands.forEach((b) => { %>
+          <label class="check"><input type="checkbox" name="marca" value="<%= b %>" <%= checked(filters.brands, b) %>> <%= b %></label>
+        <% }) %>
+      </fieldset>
+      <% } %>
+      <fieldset class="filter-group">
+        <legend class="filter-title">Precio (COP)</legend>
+        <div class="price-inputs">
+          <label class="sr-only" for="fmin">Precio mínimo</label>
+          <input id="fmin" type="text" inputmode="numeric" name="min" placeholder="Mínimo" value="<%= filters.min || '' %>">
+          <span>–</span>
+          <label class="sr-only" for="fmax">Precio máximo</label>
+          <input id="fmax" type="text" inputmode="numeric" name="max" placeholder="Máximo" value="<%= filters.max || '' %>">
+        </div>
+      </fieldset>
+      <% if (facets.connectivity.length) { %>
+      <fieldset class="filter-group">
+        <legend class="filter-title">Conectividad</legend>
+        <% facets.connectivity.forEach((c) => { %>
+          <label class="check"><input type="checkbox" name="conectividad" value="<%= c %>" <%= checked(filters.connectivity, c) %>> <%= c %></label>
+        <% }) %>
+      </fieldset>
+      <% } %>
+      <% if (facets.compatibility.length) { %>
+      <fieldset class="filter-group">
+        <legend class="filter-title">Compatible con</legend>
+        <% facets.compatibility.forEach((c) => { %>
+          <label class="check"><input type="checkbox" name="compatibilidad" value="<%= c %>" <%= checked(filters.compatibility, c) %>> <%= c %></label>
+        <% }) %>
+      </fieldset>
+      <% } %>
+      <fieldset class="filter-group">
+        <legend class="filter-title">Otros</legend>
+        <label class="check"><input type="checkbox" name="ofertas" value="1" <%= filters.offers ? 'checked' : '' %>> Solo ofertas</label>
+        <label class="check"><input type="checkbox" name="disponibles" value="1" <%= filters.inStock ? 'checked' : '' %>> Solo disponibles</label>
+      </fieldset>
+      <input type="hidden" name="orden" value="<%= filters.sort %>">
+      <div class="filter-actions">
+        <button class="btn btn-primary" type="submit">Aplicar filtros</button>
+        <% if (activeFilters || filters.q) { %><a class="btn btn-ghost" href="<%= path %>">Limpiar</a><% } %>
+      </div>
+    </form>
+  </aside>
+
+  <section class="catalog-results" aria-live="polite">
+    <div class="results-bar">
+      <button type="button" class="btn btn-ghost btn-sm filters-open"><%- icon('filter', 16) %> Filtros<% if (activeFilters) { %> (<%= activeFilters %>)<% } %></button>
+      <p class="results-count"><strong><%= result.total %></strong> <%= result.total === 1 ? 'producto' : 'productos' %></p>
+      <form method="get" action="<%= path %>" class="sort-form">
+        <% Object.entries(query).forEach(([k, v]) => { if (k === 'orden' || k === 'pagina') return; (Array.isArray(v) ? v : [v]).forEach((val) => { %>
+          <input type="hidden" name="<%= k %>" value="<%= val %>">
+        <% }) }) %>
+        <label for="orden">Ordenar:</label>
+        <select id="orden" name="orden" data-autosubmit>
+          <% [['relevancia','Relevancia'],['recientes','Más recientes'],['precio-asc','Menor precio'],['precio-desc','Mayor precio'],['nombre','Nombre (A-Z)']].forEach(([v, l]) => { %>
+            <option value="<%= v %>" <%= filters.sort === v ? 'selected' : '' %>><%= l %></option>
+          <% }) %>
+        </select>
+        <noscript><button class="btn btn-ghost btn-sm" type="submit">Ordenar</button></noscript>
+      </form>
+    </div>
+
+    <% if (result.items.length) { %>
+      <div class="product-grid">
+        <% result.items.forEach((p) => { %><%- include('partials/product-card', { p }) %><% }) %>
+      </div>
+      <% if (result.pages > 1) { %>
+        <nav class="pagination" aria-label="Paginación">
+          <% if (result.page > 1) { %><a class="btn btn-ghost btn-sm" href="<%= buildUrl({ pagina: result.page - 1 }) %>"><%- icon('left', 16) %> Anterior</a><% } %>
+          <% for (let i = 1; i <= result.pages; i++) { %>
+            <a class="page-num <%= i === result.page ? 'current' : '' %>" href="<%= buildUrl({ pagina: i }) %>" <%= i === result.page ? 'aria-current=page' : '' %>><%= i %></a>
+          <% } %>
+          <% if (result.page < result.pages) { %><a class="btn btn-ghost btn-sm" href="<%= buildUrl({ pagina: result.page + 1 }) %>">Siguiente <%- icon('right', 16) %></a><% } %>
+        </nav>
+      <% } %>
+    <% } else { %>
+      <div class="empty">
+        <%- icon('search', 36) %>
+        <h2>No encontramos productos</h2>
+        <p><%= filters.q || activeFilters ? 'Prueba con otras palabras o quita algunos filtros.' : 'Todavía no hay productos publicados en esta sección.' %></p>
+        <div class="empty-actions">
+          <a class="btn btn-ghost" href="/catalogo">Ver todo el catálogo</a>
+          <% if (waGeneral) { %><a class="btn btn-wa" href="<%= waGeneral %>" target="_blank" rel="noopener"><%- icon('whatsapp', 18) %> Preguntar por WhatsApp</a><% } %>
+        </div>
+      </div>
+    <% } %>
+  </section>
+</div>
+<div class="filters-backdrop" hidden></div>
+
+<%- include('partials/footer') %>

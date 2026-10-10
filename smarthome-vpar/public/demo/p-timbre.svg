@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+
+<defs>
+  <radialGradient id="bgp4" cx="50%" cy="42%" r="75%">
+    <stop offset="0" stop-color="#12233d"/><stop offset=".55" stop-color="#0a1322"/><stop offset="1" stop-color="#04070d"/>
+  </radialGradient>
+  <radialGradient id="glowp4" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="bodyp4" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f4f7fb"/><stop offset="1" stop-color="#b9c3d1"/>
+  </linearGradient>
+  <linearGradient id="darkp4" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2a3446"/><stop offset="1" stop-color="#0d121b"/>
+  </linearGradient>
+  <linearGradient id="accp4" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e7bff"/><stop offset="1" stop-color="#22d3ee"/>
+  </linearGradient>
+  <pattern id="gridp4" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1e7bff" stroke-opacity=".08" stroke-width="1"/>
+  </pattern>
+  <filter id="softp4" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<defs>
+  <radialGradient id="bgp4a" cx="50%" cy="42%" r="75%">
+    <stop offset="0" stop-color="#12233d"/><stop offset=".55" stop-color="#0a1322"/><stop offset="1" stop-color="#04070d"/>
+  </radialGradient>
+  <radialGradient id="glowp4a" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="bodyp4a" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f4f7fb"/><stop offset="1" stop-color="#b9c3d1"/>
+  </linearGradient>
+  <linearGradient id="darkp4a" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2a3446"/><stop offset="1" stop-color="#0d121b"/>
+  </linearGradient>
+  <linearGradient id="accp4a" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e7bff"/><stop offset="1" stop-color="#22d3ee"/>
+  </linearGradient>
+  <pattern id="gridp4a" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1e7bff" stroke-opacity=".08" stroke-width="1"/>
+  </pattern>
+  <filter id="softp4a" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<defs>
+  <radialGradient id="bgp4b" cx="50%" cy="42%" r="75%">
+    <stop offset="0" stop-color="#12233d"/><stop offset=".55" stop-color="#0a1322"/><stop offset="1" stop-color="#04070d"/>
+  </radialGradient>
+  <radialGradient id="glowp4b" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="bodyp4b" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f4f7fb"/><stop offset="1" stop-color="#b9c3d1"/>
+  </linearGradient>
+  <linearGradient id="darkp4b" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2a3446"/><stop offset="1" stop-color="#0d121b"/>
+  </linearGradient>
+  <linearGradient id="accp4b" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e7bff"/><stop offset="1" stop-color="#22d3ee"/>
+  </linearGradient>
+  <pattern id="gridp4b" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1e7bff" stroke-opacity=".08" stroke-width="1"/>
+  </pattern>
+  <filter id="softp4b" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<defs>
+  <radialGradient id="bgp4c" cx="50%" cy="42%" r="75%">
+    <stop offset="0" stop-color="#12233d"/><stop offset=".55" stop-color="#0a1322"/><stop offset="1" stop-color="#04070d"/>
+  </radialGradient>
+  <radialGradient id="glowp4c" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="bodyp4c" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f4f7fb"/><stop offset="1" stop-color="#b9c3d1"/>
+  </linearGradient>
+  <linearGradient id="darkp4c" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2a3446"/><stop offset="1" stop-color="#0d121b"/>
+  </linearGradient>
+  <linearGradient id="accp4c" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1e7bff"/><stop offset="1" stop-color="#22d3ee"/>
+  </linearGradient>
+  <pattern id="gridp4c" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1e7bff" stroke-opacity=".08" stroke-width="1"/>
+  </pattern>
+  <filter id="softp4c" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<rect width="800" height="800" fill="url(#bgp4)"/>
+<rect width="800" height="800" fill="url(#gridp4)"/>
+<circle cx="400" cy="390" r="304" fill="url(#glowp4)"/>
+<g transform="translate(400 410) scale(1.15)">
+    <ellipse cx="0" cy="170" rx="80" ry="12" fill="#000" opacity=".4"/>
+    <rect x="-70" y="-170" width="140" height="330" rx="40" fill="url(#darkp4)"/>
+    
+  <circle cx="0" cy="-95" r="34" fill="#05080d" stroke="#3a4558" stroke-width="4.08"/>
+  <circle cx="0" cy="-95" r="21.08" fill="url(#accp4)" opacity=".55"/>
+  <circle cx="0" cy="-95" r="12.24" fill="#020409"/>
+  <circle cx="-8.5" cy="-104.52" r="4.760000000000001" fill="#fff" opacity=".7"/>
+    <circle cx="0" cy="80" r="40" fill="#1a2433" stroke="url(#accp4)" stroke-width="7"/>
+    <circle cx="0" cy="80" r="44" fill="none" stroke="#22d3ee" stroke-width="10" opacity=".35" filter="url(#softp4)"/></g>
+<text x="782" y="782" text-anchor="end" font-family="Arial, sans-serif" font-size="15" letter-spacing="2" fill="#8fb3d9" opacity=".75">IMAGEN DE EJEMPLO</text>
+</svg>

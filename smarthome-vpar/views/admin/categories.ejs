@@ -1,0 +1,30 @@
+<%- include('_head') %>
+<div class="page-title">
+  <h1>Categorías</h1>
+  <div class="actions"><a class="btn btn-primary" href="/admin/categorias/nueva">+ Nueva categoría</a></div>
+</div>
+<p class="muted">El orden de esta lista es el orden en que aparecen en la tienda. Las categorías ocultas no se muestran a los visitantes, pero conservan sus productos.</p>
+<% if (!tree.length) { %>
+  <div class="empty-box"><p>No hay categorías todavía.</p><a class="btn btn-primary" href="/admin/categorias/nueva">Crear la primera categoría</a></div>
+<% } %>
+<div class="cat-list">
+<% const row = (c, isSub) => { %>
+  <div class="cat-row <%= isSub ? 'sub' : '' %> <%= c.active ? '' : 'row-off' %>">
+    <% if (c.image) { %><img src="<%= c.image %>" alt="" width="72" height="54"><% } else { %><span class="noimg"><%- icon(c.icon, 20) %></span><% } %>
+    <div class="cat-info">
+      <a class="strong" href="/admin/categorias/<%= c.id %>"><%= c.name %></a>
+      <span class="muted small"><%= c.product_count %> producto(s) visibles · /categoria/<%= c.slug %><%= c.active ? '' : ' · OCULTA' %></span>
+    </div>
+    <div class="cat-actions">
+      <form method="post" action="/admin/categorias/<%= c.id %>/mover" class="inline"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="dir" value="up"><button class="btn btn-ghost btn-xs" type="submit" aria-label="Subir <%= c.name %>">↑</button></form>
+      <form method="post" action="/admin/categorias/<%= c.id %>/mover" class="inline"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="dir" value="down"><button class="btn btn-ghost btn-xs" type="submit" aria-label="Bajar <%= c.name %>">↓</button></form>
+      <form method="post" action="/admin/categorias/<%= c.id %>/estado" class="inline"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="switch <%= c.active ? 'on' : '' %>" aria-pressed="<%= c.active ? 'true' : 'false' %>"><span></span><%= c.active ? 'Visible' : 'Oculta' %></button></form>
+      <a class="btn btn-ghost btn-sm" href="/admin/categorias/<%= c.id %>">Editar</a>
+      <a class="btn btn-ghost btn-sm" href="/admin/productos?categoria=<%= c.id %>">Productos</a>
+      <form method="post" action="/admin/categorias/<%= c.id %>/eliminar" class="inline" data-confirm="¿Eliminar la categoría “<%= c.name %>”? Los productos NO se eliminan, solo dejan de estar asociados a ella."><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-danger btn-sm" type="submit">Eliminar</button></form>
+    </div>
+  </div>
+<% } %>
+<% tree.forEach((c) => { row(c, false); c.children.forEach((sc) => row(sc, true)); }) %>
+</div>
+<%- include('_foot') %>

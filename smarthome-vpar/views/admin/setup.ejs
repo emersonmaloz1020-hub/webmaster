@@ -1,0 +1,16 @@
+<%- include('_head') %>
+<div class="auth-card wide">
+  <img src="<%= s.logo || '/logo.svg' %>" alt="" width="56" height="56">
+  <h1>Configuración inicial del panel</h1>
+  <p class="muted">Crea la cuenta del administrador de la tienda. Esta página solo está disponible mientras no exista ningún administrador.</p>
+  <div class="flash flash-info">Por seguridad, escribe el <strong>código de configuración</strong> que aparece en la consola o en los registros (logs) del servidor.</div>
+  <% if (error) { %><div class="flash flash-error" role="alert"><%= error %></div><% } %>
+  <form method="post" action="/admin/setup" class="form">
+    <label>Código de configuración<input name="code" required autocomplete="off" autocapitalize="characters" placeholder="Ej.: 1A2B3C4D"></label>
+    <label>Usuario<input name="username" value="<%= values.username || '' %>" required autocomplete="username" autocapitalize="none" placeholder="Ej.: admin"></label>
+    <label>Contraseña<input type="password" name="password" required minlength="10" autocomplete="new-password"><span class="hint">Mínimo 10 caracteres, con letras y números.</span></label>
+    <label>Repite la contraseña<input type="password" name="password2" required minlength="10" autocomplete="new-password"></label>
+    <button class="btn btn-primary btn-block" type="submit">Crear administrador</button>
+  </form>
+</div>
+<%- include('_foot') %>

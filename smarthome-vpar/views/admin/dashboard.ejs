@@ -1,0 +1,41 @@
+<%- include('_head') %>
+<div class="page-title">
+  <h1>Hola, <%= admin.username %></h1>
+  <div class="actions"><a class="btn btn-primary" href="/admin/productos/nuevo">+ Nuevo producto</a><a class="btn btn-ghost" href="/admin/categorias/nueva">+ Nueva categoría</a></div>
+</div>
+<div class="stats">
+  <a class="stat" href="/admin/productos"><span>Productos</span><strong><%= stats.products %></strong><small><%= stats.active %> visibles en la tienda</small></a>
+  <a class="stat" href="/admin/categorias"><span>Categorías</span><strong><%= stats.categories %></strong><small>Organiza tu catálogo</small></a>
+  <a class="stat" href="/admin/productos?estado=agotados"><span>Agotados</span><strong><%= stats.outOfStock %></strong><small>Actualiza existencias</small></a>
+  <a class="stat" href="/admin/pedidos"><span>Pedidos nuevos</span><strong><%= stats.orders %></strong><small><%= cartEnabled ? 'Carrito habilitado' : 'Carrito deshabilitado' %></small></a>
+</div>
+<% if (pending.length) { %>
+<section class="panel">
+  <h2>Pendientes de configuración</h2>
+  <ul class="todo">
+    <% pending.forEach((p) => { %><li><%- icon('bolt', 18) %><span><%= p.text %></span><a class="btn btn-ghost btn-sm" href="<%= p.link %>">Configurar</a></li><% }) %>
+  </ul>
+</section>
+<% } %>
+<div class="grid-2">
+  <section class="panel">
+    <h2>Accesos rápidos</h2>
+    <div class="quick">
+      <a href="/admin/productos/nuevo"><%- icon('tag', 22) %> Agregar producto</a>
+      <a href="/admin/apariencia#banner"><%- icon('bulb', 22) %> Cambiar banner</a>
+      <a href="/admin/apariencia#marca"><%- icon('star', 22) %> Logo y colores</a>
+      <a href="/admin/promociones/nueva"><%- icon('star', 22) %> Nueva promoción</a>
+      <a href="/admin/configuracion#whatsapp"><%- icon('whatsapp', 22) %> WhatsApp</a>
+      <a href="/admin/respaldo"><%- icon('shield', 22) %> Copia de seguridad</a>
+    </div>
+  </section>
+  <section class="panel">
+    <h2>Modificados recientemente</h2>
+    <% if (recent.length) { %>
+      <ul class="plain">
+        <% recent.forEach((r) => { %><li><a href="/admin/productos/<%= r.id %>"><%= r.name %></a> <span class="muted small"><%= r.updated_at %></span></li><% }) %>
+      </ul>
+    <% } else { %><p class="muted">Aún no hay productos.</p><% } %>
+  </section>
+</div>
+<%- include('_foot') %>

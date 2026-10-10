@@ -1,0 +1,142 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <img src="<%= s.hero_image %>" alt="" fetchpriority="high">
+  </div>
+  <div class="container hero-content">
+    <p class="eyebrow"><%- icon('wifi', 16) %> Hogar inteligente · Seguridad · Conectividad</p>
+    <h1><%= s.hero_title %></h1>
+    <p class="hero-subtitle"><%= s.hero_subtitle %></p>
+    <p class="hero-text"><%= s.hero_text %></p>
+    <div class="hero-actions">
+      <a class="btn btn-primary btn-lg" href="/catalogo"><%- icon('grid', 20) %> <%= s.hero_btn_primary %></a>
+      <% if (waGeneral) { %>
+        <a class="btn btn-wa btn-lg" href="<%= waGeneral %>" target="_blank" rel="noopener"><%- icon('whatsapp', 20) %> <%= s.hero_btn_whatsapp %></a>
+      <% } %>
+    </div>
+    <ul class="hero-chips" aria-label="Tipos de productos">
+      <li><%- icon('camera', 16) %> Cámaras Wi-Fi</li>
+      <li><%- icon('speaker', 16) %> Alexa y asistentes</li>
+      <li><%- icon('switch', 16) %> Interruptores</li>
+      <li><%- icon('bulb', 16) %> Iluminación</li>
+    </ul>
+  </div>
+</section>
+
+<% if (categories.length) { %>
+<section class="section" id="categorias">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2><%= s.categories_title %></h2>
+        <p><%= s.categories_text %></p>
+      </div>
+      <a class="link-arrow" href="/catalogo">Ver todo el catálogo <%- icon('arrow', 16) %></a>
+    </div>
+    <div class="category-grid">
+      <% categories.forEach((c) => { %>
+        <a class="card category-card" href="/categoria/<%= c.slug %>">
+          <span class="category-media">
+            <% if (c.image) { %><img src="<%= c.image %>" alt="<%= c.name %>" loading="lazy" width="400" height="300"><% } %>
+            <span class="category-icon"><%- icon(c.icon, 22) %></span>
+          </span>
+          <span class="category-body">
+            <h3><%= c.name %></h3>
+            <% if (c.description) { %><p><%= c.description %></p><% } %>
+            <span class="category-cta">Explorar <%- icon('arrow', 16) %></span>
+          </span>
+        </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<section class="section section-alt" id="destacados">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2><%= s.featured_title %></h2>
+        <p><%= s.featured_text %></p>
+      </div>
+      <a class="link-arrow" href="/catalogo">Ver más productos <%- icon('arrow', 16) %></a>
+    </div>
+    <% if (featured.length) { %>
+      <div class="product-grid">
+        <% featured.forEach((p) => { %><%- include('partials/product-card', { p }) %><% }) %>
+      </div>
+    <% } else { %>
+      <div class="empty"><%- icon('star', 32) %><p>Pronto publicaremos nuestros productos destacados.</p><a class="btn btn-ghost" href="/catalogo">Ver catálogo</a></div>
+    <% } %>
+  </div>
+</section>
+
+<% if (promotions.length || offers.length) { %>
+<section class="section" id="promociones">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2><%= s.promos_title %></h2>
+        <p><%= s.promos_text %></p>
+      </div>
+      <a class="link-arrow" href="/ofertas">Ver todas las ofertas <%- icon('arrow', 16) %></a>
+    </div>
+    <% if (promotions.length) { %>
+    <div class="promo-grid">
+      <% promotions.forEach((pr) => { %>
+        <article class="promo-banner">
+          <% if (pr.image) { %><img src="<%= pr.image %>" alt="" loading="lazy"><% } %>
+          <div class="promo-content">
+            <span class="badge badge-sale"><%- icon('tag', 14) %> Promoción</span>
+            <h3><%= pr.title %></h3>
+            <% if (pr.subtitle) { %><p><%= pr.subtitle %></p><% } %>
+            <% if (pr.ends_at) { %><p class="promo-dates">Válida hasta el <%= pr.ends_at.split('-').reverse().join('/') %></p><% } %>
+            <% if (pr.link_url && pr.button_text) { %><a class="btn btn-primary btn-sm" href="<%= pr.link_url %>"><%= pr.button_text %> <%- icon('arrow', 16) %></a><% } %>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+    <% } %>
+    <% if (offers.length) { %>
+      <div class="product-grid <%= promotions.length ? 'mt' : '' %>">
+        <% offers.forEach((p) => { %><%- include('partials/product-card', { p }) %><% }) %>
+      </div>
+    <% } %>
+  </div>
+</section>
+<% } %>
+
+<% if (s.benefitsList.length) { %>
+<section class="section section-alt" id="beneficios">
+  <div class="container">
+    <div class="section-head center"><div><h2><%= s.benefits_title %></h2></div></div>
+    <div class="benefit-grid">
+      <% s.benefitsList.forEach((b) => { %>
+        <div class="benefit">
+          <span class="benefit-icon"><%- icon(b.icon, 26) %></span>
+          <h3><%= b.title %></h3>
+          <% if (b.text) { %><p><%= b.text %></p><% } %>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<section class="section cta-section">
+  <div class="container cta-box">
+    <div>
+      <h2>¿No sabes qué producto elegir?</h2>
+      <p>Cuéntanos qué espacio quieres proteger o automatizar y te ayudamos a elegir.</p>
+    </div>
+    <% if (waGeneral) { %>
+      <a class="btn btn-wa btn-lg" href="<%= waGeneral %>" target="_blank" rel="noopener"><%- icon('whatsapp', 20) %> Pedir asesoría</a>
+    <% } else { %>
+      <a class="btn btn-primary btn-lg" href="/contacto"><%- icon('chat', 20) %> Ver datos de contacto</a>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

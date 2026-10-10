@@ -1,0 +1,108 @@
+<%- include('_head') %>
+<div class="page-title">
+  <h1>Apariencia</h1>
+  <div class="actions"><a class="btn btn-ghost" href="/" target="_blank" rel="noopener">Ver tienda ↗</a></div>
+</div>
+<form method="post" action="/admin/apariencia" enctype="multipart/form-data" class="form" data-dirty-check>
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <section class="panel" id="marca">
+    <h2>Marca</h2>
+    <div class="row-2">
+      <label>Nombre de la tienda<input name="store_name" value="<%= s.store_name %>" maxlength="60"></label>
+      <label>Eslogan<input name="tagline" value="<%= s.tagline %>" maxlength="200"></label>
+    </div>
+    <div class="row-2">
+      <div>
+        <p class="label">Logotipo</p>
+        <div class="logo-preview"><img src="<%= s.logo || '/logo.svg' %>" alt="Logotipo actual" width="64" height="64"></div>
+        <label class="dropzone small-drop"><%- icon('camera', 22) %><strong>Cambiar logotipo</strong><span class="hint">PNG con fondo transparente, cuadrado.</span><input type="file" name="logo" accept="image/*" data-image-input data-keep-format data-preview="#logo-prev"></label>
+        <div class="previews" id="logo-prev"></div>
+        <% if (s.logo) { %><label class="check"><input type="checkbox" name="remove_logo" value="1"> Volver al logotipo por defecto</label><% } %>
+      </div>
+      <div>
+        <p class="label">Ícono de pestaña (favicon)</p>
+        <div class="logo-preview"><img src="<%= s.favicon || s.logo || '/logo.svg' %>" alt="Ícono actual" width="32" height="32"></div>
+        <label class="dropzone small-drop"><%- icon('camera', 22) %><strong>Cambiar ícono</strong><span class="hint">Opcional. Por defecto se usa el logotipo.</span><input type="file" name="favicon" accept="image/*" data-image-input data-keep-format data-preview="#fav-prev"></label>
+        <div class="previews" id="fav-prev"></div>
+        <% if (s.favicon) { %><label class="check"><input type="checkbox" name="remove_favicon" value="1"> Quitar ícono personalizado</label><% } %>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="colores">
+    <h2>Colores y tipografía</h2>
+    <div class="color-grid">
+      <% [['color_bg','Fondo'],['color_surface','Tarjetas y paneles'],['color_primary','Principal (azul eléctrico)'],['color_accent','Acento (cian)'],['color_text','Texto']].forEach(([k, l]) => { %>
+        <label class="color-field"><span><%= l %></span>
+          <span class="color-input"><input type="color" value="<%= s[k] %>" data-color-for="<%= k %>" aria-label="<%= l %>"><input name="<%= k %>" value="<%= s[k] %>" pattern="#[0-9a-fA-F]{6}" maxlength="7" data-color-text="<%= k %>"></span>
+        </label>
+      <% }) %>
+    </div>
+    <label class="check"><input type="checkbox" name="reset_colors" value="1"> Restaurar los colores originales de SmartHome_Vpar</label>
+    <div class="row-2">
+      <label>Tipografía de textos<select name="font_body"><% fonts.forEach((f) => { %><option <%= s.font_body === f ? 'selected' : '' %>><%= f %></option><% }) %></select></label>
+      <label>Tipografía de títulos<select name="font_heading"><% fonts.forEach((f) => { %><option <%= s.font_heading === f ? 'selected' : '' %>><%= f %></option><% }) %></select></label>
+    </div>
+    <span class="hint">“Sistema” usa la fuente del dispositivo (carga más rápida).</span>
+  </section>
+
+  <section class="panel" id="banner">
+    <h2>Banner principal</h2>
+    <div class="row-2">
+      <div>
+        <img class="current-image wide" src="<%= s.hero_image %>" alt="Banner actual">
+        <label class="dropzone small-drop"><%- icon('camera', 22) %><strong>Cambiar imagen del banner</strong><span class="hint">Horizontal, mínimo 1600 × 900 px.</span><input type="file" name="hero_image" accept="image/*" data-image-input data-max="2000" data-preview="#hero-prev"></label>
+        <div class="previews" id="hero-prev"></div>
+        <% if (s.hero_image !== defaults.hero_image) { %><label class="check"><input type="checkbox" name="remove_hero_image" value="1"> Volver a la imagen por defecto</label><% } %>
+      </div>
+      <div>
+        <label>Título<input name="hero_title" value="<%= s.hero_title %>" maxlength="80"></label>
+        <label>Subtítulo<input name="hero_subtitle" value="<%= s.hero_subtitle %>" maxlength="160"></label>
+        <label>Texto complementario<textarea name="hero_text" rows="3" maxlength="300"><%= s.hero_text %></textarea></label>
+        <div class="row-2">
+          <label>Botón de productos<input name="hero_btn_primary" value="<%= s.hero_btn_primary %>" maxlength="40"></label>
+          <label>Botón de WhatsApp<input name="hero_btn_whatsapp" value="<%= s.hero_btn_whatsapp %>" maxlength="40"></label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="textos">
+    <h2>Textos de las secciones</h2>
+    <div class="row-2">
+      <label>Título de categorías<input name="categories_title" value="<%= s.categories_title %>" maxlength="80"></label>
+      <label>Texto de categorías<input name="categories_text" value="<%= s.categories_text %>" maxlength="200"></label>
+      <label>Título de destacados<input name="featured_title" value="<%= s.featured_title %>" maxlength="80"></label>
+      <label>Texto de destacados<input name="featured_text" value="<%= s.featured_text %>" maxlength="200"></label>
+      <label>Título de promociones<input name="promos_title" value="<%= s.promos_title %>" maxlength="80"></label>
+      <label>Texto de promociones<input name="promos_text" value="<%= s.promos_text %>" maxlength="200"></label>
+    </div>
+    <label>Texto del pie de página<textarea name="footer_text" rows="2" maxlength="300"><%= s.footer_text %></textarea></label>
+    <p class="hint">Para elegir los productos destacados, marca la estrella ☆ en la lista de <a href="/admin/productos">Productos</a> o la casilla “Destacado” dentro de cada producto.</p>
+  </section>
+
+  <section class="panel" id="beneficios">
+    <h2>Beneficios</h2>
+    <label>Título de la sección<input name="benefits_title" value="<%= s.benefits_title %>" maxlength="80"></label>
+    <p class="hint">Hasta 6 beneficios. Deja el título vacío para no mostrar una fila. Publica solo beneficios reales y confirmados.</p>
+    <% for (let i = 0; i < 6; i++) { const b = s.benefitsList[i] || { icon: 'star', title: '', text: '' }; %>
+      <div class="benefit-row">
+        <label>Ícono<select name="benefit_icon"><% iconChoices.forEach((ic) => { %><option value="<%= ic %>" <%= b.icon === ic ? 'selected' : '' %>><%= ic %></option><% }) %></select></label>
+        <label>Título<input name="benefit_title" value="<%= b.title %>" maxlength="80"></label>
+        <label>Descripción<input name="benefit_text" value="<%= b.text %>" maxlength="200"></label>
+      </div>
+    <% } %>
+  </section>
+
+  <section class="panel" id="redes">
+    <h2>Imagen para compartir en redes sociales</h2>
+    <p class="hint">Se muestra al compartir el enlace de la tienda en WhatsApp, Facebook, etc. Recomendado 1200 × 630 px. Si no se define, se usa el banner principal.</p>
+    <% if (s.og_image) { %><img class="current-image" src="<%= s.og_image %>" alt=""><label class="check"><input type="checkbox" name="remove_og_image" value="1"> Quitar</label><% } %>
+    <label class="dropzone small-drop"><%- icon('camera', 22) %><strong>Subir imagen</strong><input type="file" name="og_image" accept="image/*" data-image-input data-preview="#og-prev"></label>
+    <div class="previews" id="og-prev"></div>
+  </section>
+
+  <div class="sticky-save bar"><button class="btn btn-primary" type="submit">Guardar apariencia</button></div>
+</form>
+<%- include('_foot') %>

@@ -1,0 +1,27 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<div class="container">
+  <nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="/">Inicio</a><span>/</span><span aria-current="page">Carrito</span></nav>
+  <h1>Tu carrito</h1>
+  <div class="cart-layout" data-cart-page>
+    <section>
+      <div data-cart-items><p class="muted">Cargando carrito…</p></div>
+    </section>
+    <aside class="card cart-summary">
+      <h2>Resumen del pedido</h2>
+      <div class="summary-row"><span>Total</span><strong data-cart-total>$ 0</strong></div>
+      <p class="muted small">El valor del envío y la forma de pago se confirman por WhatsApp. No se realizan cobros en línea en esta página.</p>
+      <% if (s.shipping_note) { %><p class="small"><%= s.shipping_note %></p><% } %>
+      <form data-checkout-form class="stack" novalidate>
+        <label>Nombre completo<input name="name" required maxlength="80" autocomplete="name"></label>
+        <label>Teléfono / celular<input name="phone" required inputmode="tel" maxlength="20" autocomplete="tel"></label>
+        <label>Ciudad<input name="city" maxlength="80" autocomplete="address-level2"></label>
+        <label>Notas (opcional)<textarea name="notes" rows="3" maxlength="500"></textarea></label>
+        <p class="form-error" data-checkout-error hidden></p>
+        <button class="btn btn-wa btn-lg btn-block" type="submit" data-checkout-btn><%- icon('whatsapp', 20) %> <%= waConfigured ? 'Enviar pedido por WhatsApp' : 'Registrar pedido' %></button>
+      </form>
+      <div data-checkout-done hidden class="notice notice-ok"></div>
+    </aside>
+  </div>
+</div>
+<%- include('partials/footer') %>
