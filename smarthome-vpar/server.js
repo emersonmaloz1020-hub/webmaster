@@ -20,7 +20,7 @@ if (config.SEED_DEMO && seed.seedDemo()) {
   console.log('[SmartHome_Vpar] Se cargaron categorías y productos de DEMOSTRACIÓN.');
 }
 
-app.listen(config.PORT, () => {
+app.listen(config.PORT, config.HOST, () => {
   console.log(`[SmartHome_Vpar] Tienda disponible en http://localhost:${config.PORT}`);
   console.log(`[SmartHome_Vpar] Datos guardados en: ${config.DATA_DIR}`);
   if (auth.adminCount() === 0) {

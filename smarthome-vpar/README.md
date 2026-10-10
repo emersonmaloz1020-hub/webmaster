@@ -9,7 +9,7 @@ Tienda en línea de tecnología para el hogar inteligente: cámaras de seguridad
 | Documento | Para qué sirve |
 |---|---|
 | [docs/GUIA-ADMINISTRACION.md](docs/GUIA-ADMINISTRACION.md) | Cómo administrar la tienda sin programar: productos, fotos, categorías, precios, apariencia, WhatsApp |
-| [docs/PUBLICACION.md](docs/PUBLICACION.md) | Cómo publicar la tienda en Internet con tu propio dominio |
+| [docs/PUBLICACION.md](docs/PUBLICACION.md) | Cómo publicar la tienda en tu servidor **Vultr** (instalación con un comando) y conectar tu dominio |
 | [docs/SERVICIOS-Y-COSTOS.md](docs/SERVICIOS-Y-COSTOS.md) | Servicios externos, costos recurrentes y configuraciones pendientes |
 | [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md) | Tecnología, estructura del proyecto, seguridad y cómo ampliar (pagos en línea) |
 | [docs/PRUEBAS.md](docs/PRUEBAS.md) | Pruebas realizadas y cómo ejecutarlas |

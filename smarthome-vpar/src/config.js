@@ -14,6 +14,12 @@ function loadDotEnv(file) {
 }
 loadDotEnv(path.join(__dirname, '..', '.env'));
 
+// Lee una variable "1"/"0"; si no está definida usa el valor por defecto.
+function flag(name, fallback) {
+  const v = process.env[name];
+  return v === undefined || v === '' ? fallback : v === '1';
+}
+
 const ROOT = path.join(__dirname, '..');
 const DATA_DIR = path.resolve(process.env.DATA_DIR || path.join(ROOT, 'data'));
 
@@ -23,9 +29,11 @@ module.exports = {
   DB_FILE: path.join(DATA_DIR, 'store.db'),
   UPLOAD_DIR: path.join(DATA_DIR, 'uploads'),
   PORT: Number(process.env.PORT) || 3000,
+  // Con un proxy (Caddy/Nginx) delante conviene HOST=127.0.0.1 para no exponer el puerto.
+  HOST: process.env.HOST || '0.0.0.0',
   // Detrás de un proxy HTTPS (Render, Railway, Nginx…) activar para cookies seguras.
-  TRUST_PROXY: process.env.TRUST_PROXY === '1' || process.env.NODE_ENV === 'production',
-  COOKIE_SECURE: process.env.COOKIE_SECURE === '1' || process.env.NODE_ENV === 'production',
+  TRUST_PROXY: flag('TRUST_PROXY', process.env.NODE_ENV === 'production'),
+  COOKIE_SECURE: flag('COOKIE_SECURE', process.env.NODE_ENV === 'production'),
   SEED_DEMO: process.env.SEED_DEMO !== '0',
   MAX_UPLOAD_MB: Number(process.env.MAX_UPLOAD_MB) || 10,
   SESSION_DAYS: 7,

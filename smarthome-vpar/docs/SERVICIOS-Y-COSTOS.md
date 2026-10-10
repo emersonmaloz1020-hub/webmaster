@@ -4,12 +4,13 @@
 
 | Servicio | ¿Obligatorio? | ¿Registro? | Costo | Uso |
 |---|---|---|---|---|
-| Hosting con disco persistente (Render, Railway o VPS) | Sí, para publicar | Sí | Aprox. US$5–10/mes según proveedor | Ejecutar la tienda y guardar base de datos y fotos |
+| Servidor Vultr (ya contratado) | Sí, para publicar | Ya lo tienes | Lo que ya pagas; basta el plan de 1 GB. Copias automáticas de Vultr: opcional, costo adicional | Ejecutar la tienda y guardar base de datos y fotos |
 | Dominio propio | Recomendado | Sí | Aprox. US$10–40/año según extensión | Dirección `www.tudominio.com` |
 | WhatsApp / WhatsApp Business (app) | Sí, para recibir consultas | Sí (número de celular) | Gratis | Los botones abren un chat con mensaje prellenado mediante enlaces `wa.me`. **No** requiere la API de WhatsApp Business ni Meta Business |
 | Google Fonts | No | No | Gratis | Tipografías. Si eliges “Sistema” no se usa |
 | Google Search Console | Recomendado | Sí (cuenta Google) | Gratis | Indexación y seguimiento en Google |
-| Certificado HTTPS | Sí | No | Gratis (incluido en Render/Railway; Let’s Encrypt con Caddy en VPS) | Conexión segura |
+| Certificado HTTPS | Sí | No | Gratis (Let’s Encrypt, gestionado por Caddy) | Conexión segura |
+| sslip.io | Solo mientras no tengas dominio | No | Gratis | Dirección HTTPS provisional basada en la IP del servidor |
 
 No se usan servicios de pago para base de datos (SQLite viene incluido) ni para almacenamiento de imágenes (se guardan en el disco del hosting).
 

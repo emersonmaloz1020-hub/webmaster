@@ -4,6 +4,64 @@ La tienda es una aplicación Node.js que guarda la base de datos (SQLite) y las 
 
 Los precios indicados son aproximados a la fecha de redacción y pueden cambiar: verifícalos en la página de cada proveedor.
 
+## Opción recomendada — Tu servidor Vultr (instalación automática)
+
+Como ya pagas Vultr, la tienda puede vivir en tu propio servidor sin costos extra de hosting. El instalador `deploy/instalar-vultr.sh` deja todo listo: Node.js 22, la tienda como servicio que arranca sola, HTTPS gratuito con Caddy, firewall y copia de seguridad diaria de la base de datos y las fotos.
+
+**Requisitos:** un servidor (instancia) de Vultr con **Ubuntu 22.04 o 24.04**. Basta el plan más pequeño (1 GB de RAM). Si el servidor ya muestra otra página web con Nginx o Apache, el instalador se detiene para no dañarla; en ese caso crea una instancia nueva o pide ayuda para combinarlas.
+
+### Paso 1 — Abrir la consola del servidor
+
+- **Desde el celular o el computador, sin programas:** entra a <https://my.vultr.com> → **Products** → tu servidor → icono de pantalla **View Console** (arriba a la derecha). Inicia sesión como `root` con la contraseña que aparece en la pestaña **Overview** del servidor (icono del ojo para verla y botón para copiarla).
+- **Por SSH (computador):** `ssh root@IP-DE-TU-SERVIDOR`.
+
+### Paso 2 — Ejecutar el instalador
+
+Copia y pega esta línea completa y pulsa Enter:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/emersonmaloz1020-hub/webmaster/claude/smarthome-vpar-store-a3f21t/smarthome-vpar/deploy/instalar-vultr.sh | bash
+```
+
+Si ya tienes dominio y su registro DNS **A** apunta a la IP del servidor, agrégalo al final:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/emersonmaloz1020-hub/webmaster/claude/smarthome-vpar-store-a3f21t/smarthome-vpar/deploy/instalar-vultr.sh | bash -s -- tudominio.com
+```
+
+Tarda de 2 a 5 minutos. Al final muestra:
+
+- la dirección de la tienda. Sin dominio será del tipo `https://45-76-12-34.sslip.io`: una dirección segura gratuita formada con la IP de tu servidor, que abre en cualquier celular;
+- el **código** para crear tu administrador en `/admin/setup`.
+
+### Paso 3 — Crear el administrador y configurar
+
+1. Abre `https://…/admin/setup` en tu celular, escribe el código, tu usuario y contraseña.
+2. En el panel: **Configuración → WhatsApp** (tu número) y **Configuración → SEO → Dirección pública** (la dirección que mostró el instalador).
+3. Carga tus productos y elimina los de demostración.
+
+### Firewall de Vultr
+
+Si la dirección no abre, revisa en Vultr **Network → Firewall**: si tu servidor tiene un *Firewall Group* asignado, agrega reglas que permitan **TCP 80** y **TCP 443** (además de 22 para SSH).
+
+### Conectar tu dominio después
+
+1. En tu registrador de dominio crea registros **A** para `tudominio.com` y `www` con la IP del servidor (o usa **Network → DNS** de Vultr y cambia los *nameservers* del dominio a los de Vultr).
+2. Espera a que propague (minutos a pocas horas) y vuelve a ejecutar el instalador con el dominio al final. Tus productos y fotos se conservan.
+3. Actualiza la **Dirección pública** en el panel.
+
+### Mantenimiento
+
+| Tarea | Comando en la consola |
+|---|---|
+| Actualizar la tienda con los últimos cambios de GitHub | `actualizar-tienda` |
+| Ver lo que está pasando (registros) | `journalctl -u smarthome-vpar -f` |
+| Reiniciar la tienda | `systemctl restart smarthome-vpar` |
+| Restablecer contraseña del panel | `cd /opt/smarthome-vpar/smarthome-vpar && sudo -u smarthome npm run create-admin -- admin "NuevaClave2026"` |
+| Copias de seguridad | Se crean solas cada día en `/var/backups/smarthome-vpar` (14 días) |
+
+Recomendación adicional: activa **Automatic Backups** del servidor en Vultr (costo adicional pequeño) para tener una copia completa fuera del servidor.
+
 ## Opción A — Render (la más sencilla, sin servidor propio)
 
 Requiere plan de pago porque el disco persistente no está disponible en el plan gratuito (aprox. US$7/mes por el servicio + US$0,25/GB/mes por el disco).
